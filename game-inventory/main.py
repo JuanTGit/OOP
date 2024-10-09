@@ -85,4 +85,23 @@ class Potion(Item):
 	def use(self):
 		print(f'{self.name} has been used.')
 
-scimitar = Weapon()
+
+class Inventory:
+	def __init__(self):
+		self.items = {}
+		self.max_weight = 100
+		self.current_weight = 0
+
+	def add_item(self, item):
+		if self.current_weight + item.weight > self.max_weight:
+			return f"{item.name} is too heavy to fit in your inventory"
+		self.items[item.name] = {'item': item, 'quantity': 1}
+		
+
+
+inventory = Inventory()
+bronze_scimitar = Weapon('Bronze Scimitar', 10, 100, 5)
+
+inventory.add_item(bronze_scimitar)
+
+print(inventory.items)
