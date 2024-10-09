@@ -95,13 +95,42 @@ class Inventory:
 	def add_item(self, item):
 		if self.current_weight + item.weight > self.max_weight:
 			return f"{item.name} is too heavy to fit in your inventory"
-		self.items[item.name] = {'item': item, 'quantity': 1}
+		elif item.name in self.items:
+			self.items[item.name]['quantity'] += 1
+		else:
+			self.items[item.name] = {'item': item, 'quantity': 1}
 		
+		self.current_weight += item.weight
+		print(f"{item.name} added to inventory")
+
+	def remove_items(self, item, quantity):
+		if item.name not in self.items:
+			return f"{item.name} not found in inventory."
+		elif quantity >= self.items[item.name]['quantity']:
+			del self.items[item.name]
+			print(f'{item.name} has been removed from your inventory.')
+		else:
+			self.items[item.name]['quantity'] -= quantity
+			print(f'{quantity} removed from {item.name}')
+
+	def get_total_weight(self):
+		available_weight = self.max_weight - self.current_weight
+		print(f"Current Weight: {self.current_weight}. Available Weight: {available_weight}")
+		
+	def display_items(self):
+		for item, value in self.items.items():
+			print(f"Item: {item} - Quantity: {value['quantity']}")
 
 
 inventory = Inventory()
 bronze_scimitar = Weapon('Bronze Scimitar', 10, 100, 5)
+platebody = Armor('Steel Platebody', 12, 25, 10)
+saradomin_brew = Potion('Saradomin Brew', 1, 5, 64)
+abyssal_whip = Weapon('Abyssal Whip', 15, 200, 20, 30)
 
 inventory.add_item(bronze_scimitar)
+inventory.add_item(platebody)
+inventory.add_item(saradomin_brew)
+inventory.add_item(abyssal_whip)
 
-print(inventory.items)
+inventory.display_items()
