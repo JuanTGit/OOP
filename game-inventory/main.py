@@ -58,11 +58,13 @@ class Weapon(Item):
 		self.damage = damage
 		self.durability = durability
 
-	def use(self):
-		if self.durability > 0:
-			self.durability -= 1
-		elif self.durability == 0:
-			return f'{self.name} has broken'
+	def use(self, amount=1):
+		if self.durability - amount > 0:
+			self.durability -= amount
+			print(f'{self.durability} durability remaining on your {self.name}.')
+		elif self.durability - amount <= 0:
+			print(f"You've used the remaining {self.durability} durability and your weapon broke.")
+			self.durability = 0
 		
 class Armor(Item):
 	def __init__(self, name, weight, value, defense, durability=10):
@@ -98,7 +100,7 @@ class Inventory:
 		elif item.name in self.items:
 			self.items[item.name]['quantity'] += 1
 		else:
-			self.items[item.name] = {'item': item, 'quantity': 1}
+			self.items[item.name] = {'item': item, 'value': item.value, 'quantity': 1}
 		
 		self.current_weight += item.weight
 		print(f"{item.name} added to inventory")
@@ -119,7 +121,7 @@ class Inventory:
 		
 	def display_items(self):
 		for item, value in self.items.items():
-			print(f"Item: {item} - Quantity: {value['quantity']}")
+			print(f"Item: {item} - Value: {value['value']} - Quantity: {value['quantity']}")
 
 
 inventory = Inventory()
@@ -133,4 +135,8 @@ inventory.add_item(platebody)
 inventory.add_item(saradomin_brew)
 inventory.add_item(abyssal_whip)
 
+bronze_scimitar.use(11)
+
+
 inventory.display_items()
+
