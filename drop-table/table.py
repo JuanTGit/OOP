@@ -10,10 +10,10 @@ import random
 
 class DropTable:
     table = {
-        'ammo': [],      # 1 in 64 drop rate
+        'rares': [],      # 1 in 1500 drop rate
         'weapons': [],   # 1 in 128 drop rate
-        'other': [],     # 1 in 4 drop rate
-        'rares': []      # 1 in 1500 drop rate
+        'ammo': [],      # 1 in 64 drop rate
+        'other': []     # 1 in 4 drop rate
     }
     
     drop_rates = {
@@ -37,9 +37,9 @@ class DropTable:
         drops = []
         for category, items in self.table.items():
             rate = self.drop_rates[category]
-            if items and random.randint(1, rate) == 1:
+            if items and random.randint(1, rate) == 1 or category == 'other':
                 drops.append(random.choice(items))
-        return drops
+                return drops
 
 # Example usage:
 # Create the drop table
