@@ -11,11 +11,11 @@ import player
 
 class DropTable:    
     drop_rates = {
-        'ammo': 64,
+        'rares': 1500,
         'weapons': 128,
-        'other': 4,
+        'ammo': 64,
         'herbs': 32,
-        'rares': 1500
+        'other': 4
     }
 
     def __init__(self):
@@ -27,7 +27,7 @@ class DropTable:
             'other': {}     # 1 in 4 drop rate
         }
 
-    def add_items(self, category, item, quantity=1):
+    def add_item(self, category, item, quantity=1):
         if category in self.table:
             if item in self.table[category]:
                 self.table[category][item] += quantity
@@ -35,28 +35,33 @@ class DropTable:
                 self.table[category][item] = quantity
         else:
             print(f"Category '{category}' does not exist.")
+
+    def add_items(self, category, dictItems):
+        if category in self.table:
+            for k, v in dictItems.items():
+                self.table[category][k] = v
     
     def get_drop(self, player):
         for category, items in self.table.items():
             rate = self.drop_rates[category]
             if items and random.randint(1, rate) == 1 or category == 'other':
                 drop = random.choice(list(items.keys()))
-                player.add_items({drop: items[drop]})
-                return
+                drop_copy = items[drop].copy()
+                player.add_item({drop: drop_copy})
+                return (f"Raid's Completed: {player.raid_counter}", sorted(player.inventory.items(), key=lambda item: item[1]['value'], reverse=True), f'Total Value: {player.calculate_inventory():,} gp')
+            
             
     
 
 drop_table = DropTable()
-
 cox = DropTable()
-cox.add_items('ammo', 'Dragon arrows', quantity=250)
-cox.add_items('herbs', 'Rannar weed', quantity=30)
-cox.add_items('other', 'Teak plank', quantity=145)
-cox.add_items('other', 'Mahogany plank', quantity=80)
-cox.add_items('other', 'Dynamite', quantity=45)
-cox.add_items('other', 'Dark relic', quantity=1)
-cox.add_items('rares', 'Twisted Bow', quantity=1)
-cox.add_items('rares', 'Dragon claws', quantity=1)
+
+cox.add_items('rares', {'Twisted bow': {'quantity': 1, 'value': 1600000000}, 'Edler maul': {'quantity': 1, 'value': 300000}, 'Kodai insigna': {'quantity': 250, 'value': 300000}})
+cox.add_items('weapons', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Rune arrow': {'quantity': 250, 'value': 300000}, 'Soul rune': {'quantity': 250, 'value': 300000}, 'Blood rune': {'quantity': 250, 'value': 300000}, 'Death rune': {'quantity': 250, 'value': 300000}})
+cox.add_items('ammo', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Rune arrow': {'quantity': 250, 'value': 300000}, 'Soul rune': {'quantity': 250, 'value': 300000}, 'Blood rune': {'quantity': 250, 'value': 300000}, 'Death rune': {'quantity': 250, 'value': 300000}})
+cox.add_items('herbs', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Rune arrow': {'quantity': 250, 'value': 300000}, 'Soul rune': {'quantity': 250, 'value': 300000}, 'Blood rune': {'quantity': 250, 'value': 300000}, 'Death rune': {'quantity': 250, 'value': 300000}})
+cox.add_items('other', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Rune arrow': {'quantity': 250, 'value': 300000}, 'Soul rune': {'quantity': 250, 'value': 300000}, 'Blood rune': {'quantity': 250, 'value': 300000}, 'Death rune': {'quantity': 250, 'value': 300000}})
+
 cox.get_drop(player.juant)
 cox.get_drop(player.sherleyl)
 # cox.add_items('ammo', ['Dragon arrows', 'Rune arrow', 'Soul rune', 'Blood rune', 'Death rune'])

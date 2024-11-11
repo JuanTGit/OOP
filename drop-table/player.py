@@ -2,18 +2,31 @@ class Player:
 
     def __init__(self, name):
         self.name = name
+        self.raid_counter = 0
         self.inventory = {}
 
-    def add_items(self, items, quantity=1):
+    def add_item(self, items):
+        self.raid_counter += 1
         if len(self.inventory) >= 28:
             print('Your inventory is full.')
-        for item, detail in items.items():
+        for item, values in items.items():
             if item in self.inventory:
-                self.inventory[item]['quantity'] += quantity
+                self.inventory[item]['quantity'] += values['quantity']
+                self.inventory[item]['value'] += values['value']
             else:
-                self.inventory[item] = quantity
+                self.inventory[item] = values
 
-        print(f'{self.name} inventory: {self.inventory}')
+        # print(self.inventory)
+
+    def calculate_inventory(self):
+        total = 0
+        if self.inventory:
+            for value in self.inventory.values():
+                total += value['value']
+        return total
+        
+    def remove_items(self):
+        pass
 
 juant = Player('Juan T')
 sherleyl = Player('Sherley L')
