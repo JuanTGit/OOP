@@ -62,8 +62,8 @@ cox.add_items('ammo', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Run
 cox.add_items('herbs', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Rune arrow': {'quantity': 250, 'value': 300000}, 'Soul rune': {'quantity': 250, 'value': 300000}, 'Blood rune': {'quantity': 250, 'value': 300000}, 'Death rune': {'quantity': 250, 'value': 300000}})
 cox.add_items('other', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Rune arrow': {'quantity': 250, 'value': 300000}, 'Soul rune': {'quantity': 250, 'value': 300000}, 'Blood rune': {'quantity': 250, 'value': 300000}, 'Death rune': {'quantity': 250, 'value': 300000}})
 
-cox.get_drop(player.juant)
-cox.get_drop(player.sherleyl)
+# cox.get_drop(player.juant)
+# cox.get_drop(player.sherleyl)
 # cox.add_items('ammo', ['Dragon arrows', 'Rune arrow', 'Soul rune', 'Blood rune', 'Death rune'])
 # cox.add_items('herbs', ['Rannar weed', 'Toadflax', 'Irit leaf', 'Torstol', 'Snapdragon'])
 # cox.add_items('other', ['Teak plank', 'Mahogany plank', 'Dynamite', 'Dark relic'])
@@ -71,5 +71,9 @@ cox.get_drop(player.sherleyl)
 
 # print(cox.table)
 
+randomizer = random.random()
+rarity = 8/127
 
+didDrop = randomizer < rarity
 
+print(f"{didDrop}, randomizer: {randomizer} rarity: {rarity}")

@@ -2,44 +2,38 @@ import requests
 from bs4 import BeautifulSoup
 
 
-cox_wiki = requests.get("https://oldschool.runescape.wiki/w/Ancient_chest")
-soup = BeautifulSoup(cox_wiki.text, "html.parser")
-cox_tables = soup.find_all('table', attrs={'class':'item-drops'})
+bandos_wiki = requests.get("https://oldschool.runescape.wiki/w/General_Graardor")
+soup = BeautifulSoup(bandos_wiki.text, "html.parser")
+bandos_tables = soup.find_all('table', attrs={'class': 'item-drops'})
 
-item_data = {}
 
-for table in cox_tables:
+item_details = {}
+for table in bandos_tables:
 
 	rows = table.find_all('tr')
 
-	print('==============================TABLE==============================')
-	
-	for row in rows:
-
+	print(f'==================================TABLE==================================')
+	for row in rows[1:]:
+		# Item Name Row
 		item_name_cell = row.find('td', attrs={'class': 'item-col'})
-		# print(item_name_cell)
+		# Item Quantity Row
+		item_quantity_cell = row.find('td', attrs={'data-sort-value': True})
+		# Rarity Row
+		item_rarity_cell = row.find('span', attrs={'data-drop-fraction': True})
+		# Item Value Row
+		item_value_cell = row.find('td', attrs={'class': 'ge-column'})
 
-		quantity_cell = row.find('td', attrs={'data-sort-value': True})
-		# print(quantity_cell)
-
-		rarity_cell = row.find('span', attrs={'data-drop-percent': True})
-		# print(rarity_cell)
-
-		value_cell = row.find('td', attrs={'class': 'ge-column'})
-		# print(value_cell)
-
-		if item_name_cell and quantity_cell and rarity_cell and value_cell:
+		if item_name_cell and item_quantity_cell and item_rarity_cell and item_value_cell:
 			item_name = item_name_cell.text.strip()
-			quanity = quantity_cell['data-sort-value']
-			rarity = rarity_cell.text.strip()
-			value = value_cell.text.strip()
-
-			print(f'name: {item_name} - quantity: {quanity} - rarity: {rarity} - value: {value}')
-			item_data[item_name] = {
-				'quantity': quanity,
-				'rarity': rarity,
-				'value': value
-			}
+			item_quantity = item_quantity_cell['data-sort-value']
+			item_rarity = item_rarity_cell['data-drop-fraction']
+			item_value = item_value_cell.text.replace(',', '')
+			item_value.replace('–', '-')
+			# if item_value.split('-'):
+			# 	min_value, max_value = item_value.split('-')
+			# 	print(min_value, max_value)
+			range_list = []
 
 
-print(item_data)
+			if '-' in item_value:
+				print(item_value)
