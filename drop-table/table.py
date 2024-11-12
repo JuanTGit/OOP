@@ -7,8 +7,13 @@
 """
 import random
 # from player import juant
-import player
+from player import Player
+from scraper import item_details
+from flask import Flask
 
+app = Flask(__name__)
+
+# print(item_details)
 class DropTable:    
     drop_rates = {
         'rares': 1500,
@@ -50,30 +55,13 @@ class DropTable:
                 player.add_item({drop: drop_copy})
                 return (f"Raid's Completed: {player.raid_counter}", sorted(player.inventory.items(), key=lambda item: item[1]['value'], reverse=True), f'Total Value: {player.calculate_inventory():,} gp')
             
-            
-    
 
-drop_table = DropTable()
-cox = DropTable()
-
-cox.add_items('rares', {'Twisted bow': {'quantity': 1, 'value': 1600000000}, 'Edler maul': {'quantity': 1, 'value': 300000}, 'Kodai insigna': {'quantity': 250, 'value': 300000}})
-cox.add_items('weapons', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Rune arrow': {'quantity': 250, 'value': 300000}, 'Soul rune': {'quantity': 250, 'value': 300000}, 'Blood rune': {'quantity': 250, 'value': 300000}, 'Death rune': {'quantity': 250, 'value': 300000}})
-cox.add_items('ammo', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Rune arrow': {'quantity': 250, 'value': 300000}, 'Soul rune': {'quantity': 250, 'value': 300000}, 'Blood rune': {'quantity': 250, 'value': 300000}, 'Death rune': {'quantity': 250, 'value': 300000}})
-cox.add_items('herbs', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Rune arrow': {'quantity': 250, 'value': 300000}, 'Soul rune': {'quantity': 250, 'value': 300000}, 'Blood rune': {'quantity': 250, 'value': 300000}, 'Death rune': {'quantity': 250, 'value': 300000}})
-cox.add_items('other', {'Dragon arrows': {'quantity': 250, 'value': 300000}, 'Rune arrow': {'quantity': 250, 'value': 300000}, 'Soul rune': {'quantity': 250, 'value': 300000}, 'Blood rune': {'quantity': 250, 'value': 300000}, 'Death rune': {'quantity': 250, 'value': 300000}})
-
-# cox.get_drop(player.juant)
-# cox.get_drop(player.sherleyl)
-# cox.add_items('ammo', ['Dragon arrows', 'Rune arrow', 'Soul rune', 'Blood rune', 'Death rune'])
-# cox.add_items('herbs', ['Rannar weed', 'Toadflax', 'Irit leaf', 'Torstol', 'Snapdragon'])
-# cox.add_items('other', ['Teak plank', 'Mahogany plank', 'Dynamite', 'Dark relic'])
-# cox.add_items('rares', ['Twisted Bow', 'Kodai insignia', 'Elder Maul', 'Dragon claws', 'Ancestral piece', 'Prayer scroll', 'DHC'])
-
-# print(cox.table)
+for table, items in item_details.items():
+    print(table)
 
 randomizer = random.random()
 rarity = 8/127
 
 didDrop = randomizer < rarity
 
-print(f"{didDrop}, randomizer: {randomizer} rarity: {rarity}")
+# print(f"{didDrop}, randomizer: {randomizer} rarity: {rarity}")

@@ -9,10 +9,10 @@ bandos_tables = soup.find_all('table', attrs={'class': 'item-drops'})
 
 item_details = {}
 for table in bandos_tables:
+	table_name = table.find_previous('span', attrs={'class': 'mw-headline'}).text
 
 	rows = table.find_all('tr')
-
-	print(f'==================================TABLE==================================')
+	
 	for row in rows[1:]:
 		# Item Name Row
 		item_name_cell = row.find('td', attrs={'class': 'item-col'})
@@ -27,13 +27,23 @@ for table in bandos_tables:
 			item_name = item_name_cell.text.strip()
 			item_quantity = item_quantity_cell['data-sort-value']
 			item_rarity = item_rarity_cell['data-drop-fraction']
-			item_value = item_value_cell.text.replace(',', '')
-			item_value.replace('–', '-')
-			# if item_value.split('-'):
-			# 	min_value, max_value = item_value.split('-')
-			# 	print(min_value, max_value)
-			range_list = []
+			item_value = item_value_cell['data-sort-value']
+
+			if table_name not in item_details:
+				item_details[table_name] = []
 
 
-			if '-' in item_value:
-				print(item_value)
+			item_details[table_name].append({
+				'name': item_name,
+				'quantity': item_quantity,
+				'rarity': item_rarity,
+				'value': item_value
+			})
+
+# for table, values in item_details.items():
+# 	print(f'============{table}============')
+# 	for item in values:
+# 		print(item['name'])
+
+
+# print(count, names)
