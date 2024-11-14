@@ -1,11 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 
-
-bandos_wiki = requests.get("https://oldschool.runescape.wiki/w/General_Graardor")
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
+bandos_wiki = requests.get("https://oldschool.runescape.wiki/w/General_Graardor", headers=headers)
 soup = BeautifulSoup(bandos_wiki.text, "html.parser")
 bandos_tables = soup.find_all('table', attrs={'class': 'item-drops'})
-
 
 item_details = {}
 for table in bandos_tables:
@@ -44,11 +43,3 @@ for table in bandos_tables:
 				'rarity': convert_drops(item_rarity),
 				'value': item_value
 			})
-
-# for table, values in item_details.items():
-# 	print(f'============{table}============')
-# 	for item in values:
-# 		print(item['name'])
-
-
-# print(count, names)

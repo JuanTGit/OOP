@@ -1,12 +1,5 @@
-"""
-	Create a table that takes in a dictionary of items in different categories...
-	runes/ammunition
-	weapons/armor
-	other
-	rares
-"""
 import random
-from player import Player
+from player import Player, juant
 from scraper import item_details
 
 class DropTable:
@@ -23,7 +16,7 @@ class DropTable:
             self.probability_table[table] = cumulative_drop_rate
 
     
-    def get_drop(self):
+    def get_drop(self, player):
         table_roll = random.random()
         cumulative_table_prob = 0
 
@@ -32,39 +25,33 @@ class DropTable:
             cumulative_table_prob += chance
             if table_roll <= cumulative_table_prob:
                 selected_table = table
+                print(f"{selected_table} Hit!")
                 break
         
         if selected_table is None:
             selected_table = "Other"
 
         items = self.table[selected_table]
-        cumulative_rarity = 0
-        item_roll = random.random()
+
+        def item_received():
+            cumulative_rarity = 0
+            item_roll = random.random()
+            for item in items:
+                cumulative_rarity += item['rarity']
+                if item_roll <= cumulative_rarity:
+                    item_copy = item.copy()
+                    return item_copy
+            
+            random_table_item = random.choice(items).copy()
+
+            return random_table_item
         
-        for item in items:
-            cumulative_rarity += item['rarity']
-            if item_roll <= cumulative_rarity:
-                return item
+        item_drop = item_received()
         
-        return random.choice(items)
-            # for item in items:
-            #     print(item['rarity'])
-            # for item in items:
-            #     item['rarity'] = int(item['rarity'])
+        player.add_item(item_drop)
+        return [f"Total Value: {juant.calculate_inventory()}", juant.inventory, item_drop]
             
 
 new_table = DropTable(item_details)
 
-new_table.get_drop()
-
-
-randomizer = random.random()
-rarity = 8/127
-
-didDrop = randomizer < rarity
-
-# print(f"{didDrop}, randomizer: {randomizer} rarity: {rarity}")
-
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
+new_table.get_drop(juant)

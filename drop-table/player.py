@@ -9,14 +9,18 @@ class Player:
         self.raid_counter += 1
         if len(self.inventory) >= 28:
             print('Your inventory is full.')
-        for item, values in items.items():
-            if item in self.inventory:
-                self.inventory[item]['quantity'] += values['quantity']
-                self.inventory[item]['value'] += values['value']
-            else:
-                self.inventory[item] = values
+        drop = items['name']
+        if drop in self.inventory:
+            self.inventory[drop]['quantity'] += int(items['quantity'])
+            self.inventory[drop]['value'] += int(items['value'])
+        else:
+            self.inventory[drop] = {
+                'quantity': int(items['quantity']),
+                'value': int(items['value'])
+            }
 
-        # print(self.inventory)
+
+        print(self.inventory)
 
     def calculate_inventory(self):
         total = 0
