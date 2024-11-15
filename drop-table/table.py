@@ -7,13 +7,17 @@ class DropTable:
     def __init__(self, table):
         self.table = table
         self.probability_table = {}
-        
+        self.boss_image = None
 
         for table, items in self.table.items():
             cumulative_drop_rate = 0
-            for item in items:
-                cumulative_drop_rate += item['rarity']
-            self.probability_table[table] = cumulative_drop_rate
+
+            if table == 'boss_image':
+                self.boss_image = items
+            else:
+                for item in items:
+                    cumulative_drop_rate += item['rarity']
+                self.probability_table[table] = cumulative_drop_rate
 
     
     def get_drop(self, player):
@@ -50,7 +54,7 @@ class DropTable:
         player.add_item(item_drop)
 
 
-        return [f"Total Value: {juant.calculate_inventory()}", juant.inventory, item_drop, juant.raid_counter]
+        return [f"Total Value: {juant.calculate_inventory()}", juant.inventory, item_drop, juant.raid_counter, self.boss_image]
             
 
 new_table = DropTable(item_details)

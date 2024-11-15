@@ -6,6 +6,7 @@ const killCounter = document.getElementById('kill-count')
 const removeItem = document.getElementById('remove-item')
 const updateItemName = document.getElementById('item-name')
 const updateItemImg = document.getElementById('dropped-item-img')
+const updateBossImg = document.getElementById('boss-img')
 
 let currentItem = null
 
@@ -30,7 +31,9 @@ function updateUI(data) {
 	itemList.innerHTML = '';
 	updateItemName.innerHTML = `You received ${currentItem}!`
 	updateItemImg.src = `${itemImage}`
-	updateItemImg.style.width = '50px'
+	updateItemImg.style.width = '70px'
+	updateItemImg.style.height = '50px'
+	updateBossImg.src = `${data.Inventory[4]}`
 	
 	document.getElementById('dropped-item-details').textContent = `Drop Details: Amount: ${currentDrop['quantity'].toLocaleString() || 0} Value: ${Number(currentDrop['value']).toLocaleString() || 0} gp`
 	killCounter.textContent = `Total Kills: ${totalKills || 0}`
