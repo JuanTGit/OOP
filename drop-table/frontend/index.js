@@ -3,6 +3,7 @@ const getDropButton = document.getElementById('get-drop')
 const itemList = document.getElementById('drop-details')
 const droppedItem = document.getElementById('dropped-item')
 const killCounter = document.getElementById('kill-count')
+const totalValue = document.getElementById('total-value')
 const removeItem = document.getElementById('remove-item')
 const updateItemName = document.getElementById('item-name')
 const updateItemImg = document.getElementById('dropped-item-img')
@@ -26,6 +27,7 @@ function updateUI(data) {
 	const currentDrop = data.Inventory[2];
 	const totalKills = data.Inventory[3];
 	const itemImage = currentDrop['image']
+	const totalProfit = data.Inventory[0]
 	currentItem = `${currentDrop['name']}`
 
 	itemList.innerHTML = '';
@@ -37,6 +39,7 @@ function updateUI(data) {
 	
 	document.getElementById('dropped-item-details').textContent = `Drop Details: Amount: ${currentDrop['quantity'].toLocaleString() || 0} Value: ${Number(currentDrop['value']).toLocaleString() || 0} gp`
 	killCounter.textContent = `Total Kills: ${totalKills || 0}`
+	totalValue.textContent = `Total Value: ${totalProfit.toLocaleString() || 0}`
 
 	for (const key in inventoryItems) {
 		const newItem = document.createElement('li');

@@ -52,9 +52,10 @@ class DropTable:
         
         item_drop = item_received()
         player.add_item(item_drop)
+        total_profit = juant.calculate_inventory()
 
 
-        return [f"Total Value: {juant.calculate_inventory()}", juant.inventory, item_drop, juant.raid_counter, self.boss_image]
+        return [total_profit, juant.inventory, item_drop, juant.raid_counter, self.boss_image]
             
 
 new_table = DropTable(item_details)
