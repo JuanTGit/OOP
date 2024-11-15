@@ -26,32 +26,16 @@ class Player:
                 total += value['value']
         return total
         
-    def remove_items(self):
-        pass
+    def drop_item(self, item):
+        print(self.inventory)
+        if item in self.inventory:
+            del self.inventory[item]
+        else:
+            return 'Item not in inventory'
+        print(f'{item} removed from inventory')
+        print(self.inventory)
 
 juant = Player('Juan T')
 sherleyl = Player('Sherley L')
 
 
-
-
-# juant.add_items({
-#     'bronze_sword': {
-#         'item_name': 'Bronze sword',
-#         'price': 100,
-#         'quantity': 1
-#     },
-#     'mithril_scimitar': {
-#         'item_name': 'Mithril scimitar',
-#         'price': 250,
-#         'quantity': 1
-#     }
-# })
-
-# juant.add_items({
-#     'bronze_sword': {
-#         'item_name': 'Mithril scimitar',
-#         'price': 250,
-#         'quantity': 1
-#     }
-# }, 5)

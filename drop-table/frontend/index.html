@@ -7,7 +7,7 @@
 		<meta name="Description" content="Enter your description here"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-		<script src="/frontend/index.js" defer></script>
+		<script src="./index.js" defer></script>
 		<title>OSRS Drop Simulator</title>
 	</head>
 	<body>
@@ -22,13 +22,14 @@
 
 			<!-- Row 2 Current Drop -->
 			<div class="row">
-				<div class="card m-5" style="width: 18rem;">
+				<div class="my-5 col-6">
 					<!-- New Dropped Item -->
-					<div class="card m-2">
+					<div class="card">
 						<div class="card-body">
-							<h5 class="card-title" id="dropped-item">Dropped Item: </h5>
-							<p class="card-text" id="dropped-item-details">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-primary">Button</a>
+							<h5>Dropped Item:</h5>
+							<h4 class="card-title" id="dropped-item"></h4>
+							<p class="card-text" id="dropped-item-details">Drop Details:</p>
+							<a href="#" class="btn btn-danger" id="remove-item">Drop Item</a>
 						</div>
 					  </div>
 				</div>
@@ -36,9 +37,12 @@
 			<!-- Row 3 Inventory -->
 			<div class="row">
 				<!-- Inventory -->
-				<ul class="list-group list-group-flush" id="drop-details">
-					<!-- List items -->
-				</ul>
+				 <div class="col-6">
+						<h4 name="kill-count" id="kill-count">Total Kills: </h1>
+						<ul class="list-group list-group-flush p-4" id="drop-details">
+							<!-- List items -->
+						</ul>
+				 </div>
 				<!--  -->
 			</div>
 			</div>

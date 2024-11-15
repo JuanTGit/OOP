@@ -36,7 +36,6 @@ for table in bandos_tables:
 			if table_name not in item_details:
 				item_details[table_name] = []
 
-
 			item_details[table_name].append({
 				'name': item_name,
 				'quantity': item_quantity,
