@@ -16,7 +16,8 @@ class Player:
         else:
             self.inventory[drop] = {
                 'quantity': int(items['quantity']),
-                'value': int(items['value'])
+                'value': int(items['value']),
+                'image': items['image']
             }
 
     def calculate_inventory(self):
@@ -32,8 +33,6 @@ class Player:
             del self.inventory[item]
         else:
             return 'Item not in inventory'
-        print(f'{item} removed from inventory')
-        print(self.inventory)
 
 juant = Player('Juan T')
 sherleyl = Player('Sherley L')

@@ -21,6 +21,18 @@ for table in bandos_tables:
 		item_rarity_cell = row.find('span', attrs={'data-drop-fraction': True})
 		# Item Value Row
 		item_value_cell = row.find('td', attrs={'class': 'ge-column'})
+		# Image SRC
+		item_img_cell = row.find('td', attrs={'class': 'inventory-image'})
+
+		image_url = None
+		# print(img_src)
+
+		if item_img_cell:
+			img_tag = item_img_cell.find('img', attrs={'src': True})
+			if img_tag:
+				image_url = img_tag['src']
+
+		img_src = f'https://oldschool.runescape.wiki{image_url}'
 
 		if item_name_cell and item_quantity_cell and item_rarity_cell and item_value_cell:
 			item_name = item_name_cell.text.strip()
@@ -40,5 +52,6 @@ for table in bandos_tables:
 				'name': item_name,
 				'quantity': item_quantity,
 				'rarity': convert_drops(item_rarity),
-				'value': item_value
+				'value': item_value,
+				'image': img_src
 			})

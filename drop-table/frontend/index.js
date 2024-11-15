@@ -4,6 +4,8 @@ const itemList = document.getElementById('drop-details')
 const droppedItem = document.getElementById('dropped-item')
 const killCounter = document.getElementById('kill-count')
 const removeItem = document.getElementById('remove-item')
+const updateItemName = document.getElementById('item-name')
+const updateItemImg = document.getElementById('dropped-item-img')
 
 let currentItem = null
 
@@ -22,17 +24,29 @@ function updateUI(data) {
 	const inventoryItems = data.Inventory[1];
 	const currentDrop = data.Inventory[2];
 	const totalKills = data.Inventory[3];
+	const itemImage = currentDrop['image']
 	currentItem = `${currentDrop['name']}`
 
 	itemList.innerHTML = '';
-	droppedItem.innerHTML = currentDrop?.name || 'No item';
+	updateItemName.innerHTML = `You received ${currentItem}!`
+	updateItemImg.src = `${itemImage}`
+	updateItemImg.style.width = '50px'
+	
 	document.getElementById('dropped-item-details').textContent = `Drop Details: Amount: ${currentDrop['quantity'].toLocaleString() || 0} Value: ${Number(currentDrop['value']).toLocaleString() || 0} gp`
 	killCounter.textContent = `Total Kills: ${totalKills || 0}`
 
 	for (const key in inventoryItems) {
 		const newItem = document.createElement('li');
-		newItem.textContent = `${key}: Amount: ${inventoryItems[key]['quantity'].toLocaleString() || 0} - Value: ${inventoryItems[key]['value'].toLocaleString() || 0} gp`;
-		itemList.appendChild(newItem)
+		const img = document.createElement('img');
+		const head = document.createElement('p');
+
+		head.innerHTML = `${key}`
+		newItem.innerHTML = `Amount: ${inventoryItems[key]['quantity'].toLocaleString() || 0} <br> Value: ${inventoryItems[key]['value'].toLocaleString() || 0} gp`;
+		img.src = inventoryItems[key]['image']
+
+		newItem.prepend(head)
+		newItem.prepend(img);
+		itemList.appendChild(newItem);
 	}
 
 }
