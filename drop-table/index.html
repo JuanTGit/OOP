@@ -11,8 +11,39 @@
 		<title>OSRS Drop Simulator</title>
 	</head>
 	<body>
-		<h1> Drop Simulator</h1>
+		<div class="container">
 
+			<h1 class="text-center"> Drop Simulator</h1>
+
+			<!-- Row 1 -->
+			<div class="row">
+				<button type="button" class="btn btn-success" id="get-drop">Roll Drop</button>
+			</div>
+
+			<!-- Row 2 Current Drop -->
+			<div class="row">
+				<div class="card m-5" style="width: 18rem;">
+					<!-- New Dropped Item -->
+					<div class="card m-2">
+						<div class="card-body">
+							<h5 class="card-title" id="dropped-item">Dropped Item: </h5>
+							<p class="card-text" id="dropped-item-details">With supporting text below as a natural lead-in to additional content.</p>
+							<a href="#" class="btn btn-primary">Button</a>
+						</div>
+					  </div>
+				</div>
+
+			<!-- Row 3 Inventory -->
+			<div class="row">
+				<!-- Inventory -->
+				<ul class="list-group list-group-flush" id="drop-details">
+					<!-- List items -->
+				</ul>
+				<!--  -->
+			</div>
+			</div>
+
+		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
 	</body>

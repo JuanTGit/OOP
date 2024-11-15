@@ -19,9 +19,6 @@ class Player:
                 'value': int(items['value'])
             }
 
-
-        print(self.inventory)
-
     def calculate_inventory(self):
         total = 0
         if self.inventory:
