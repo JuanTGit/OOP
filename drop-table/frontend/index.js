@@ -67,18 +67,19 @@ function updateUI(data) {
 		const newItem = document.createElement('li');
 		const itemWrapper = document.createElement('div');
 		const img = document.createElement('img');
-		const quantityLabel = document.createElement('span')
+		const quantityLabel = document.createElement('p')
 		const head = document.createElement('p');
 		const foot = document.createElement('p');
 		newItem.name = `${key}`
 		img.id = 'inventory-item'
-		foot.id = 'footer-gp-value'
+
+		
 
 		quantityLabel.textContent = `${inventoryItems[key]['quantity'].toLocaleString() || 0}`
 		quantityLabel.classList.add('quantity-label')
 
 		head.innerHTML = `${key}`
-		head.classList.add('mt-3')
+		// head.classList.add('mt-3')
 		foot.textContent = `${inventoryItems[key]['value'].toLocaleString() || 0} gp`;
 
 		img.src = inventoryItems[key]['image']
