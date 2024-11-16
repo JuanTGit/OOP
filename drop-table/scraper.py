@@ -30,6 +30,7 @@ for table in boss_tables:
 		# Image SRC
 		item_img_cell = row.find('td', attrs={'class': 'inventory-image'})
 
+		# print(item_name_cell.text)
 		image_url = None
 		# print(img_src)
 
@@ -37,6 +38,7 @@ for table in boss_tables:
 			img_tag = item_img_cell.find('img', attrs={'src': True})
 			if img_tag:
 				image_url = img_tag['src']
+		# print(image_url)
 
 		img_src = f'https://oldschool.runescape.wiki{image_url}'
 

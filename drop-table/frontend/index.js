@@ -22,6 +22,18 @@ async function getData() {
 	}
 }
 
+async function recentlyDeleted() {
+	try{
+		let req = await fetch("http://127.0.0.1:5000/get-drop/drop-current")
+		let data = await req.json()
+		return data
+	} catch (error) {
+		console.error('Failed to fetch data:', error);
+		return { Inventory: [] };
+	}
+	
+}
+
 function updateUI(data) {
 	const inventoryItems = data.Inventory[1];
 	const currentDrop = data.Inventory[2];
@@ -31,27 +43,44 @@ function updateUI(data) {
 	currentItem = `${currentDrop['name']}`
 
 	itemList.innerHTML = '';
-	updateItemName.innerHTML = `You received ${currentItem}!`
+	updateItemName.innerHTML = `You received ${currentDrop['quantity'].toLocaleString()} x ${currentDrop['name']}!`
 	updateItemImg.src = `${itemImage}`
-	updateItemImg.style.width = '70px'
-	updateItemImg.style.height = '50px'
+	updateItemImg.classList.remove('bounce');
+	updateItemImg.offsetHeight;
+	updateItemImg.classList.add('bounce');
 	updateBossImg.src = `${data.Inventory[4]}`
+
 	
-	document.getElementById('dropped-item-details').textContent = `Drop Details: Amount: ${currentDrop['quantity'].toLocaleString() || 0} Value: ${Number(currentDrop['value']).toLocaleString() || 0} gp`
+	document.getElementById('dropped-item-details').innerHTML = `Value: ${Number(currentDrop['value']).toLocaleString() || 0} gp`
 	killCounter.textContent = `Total Kills: ${totalKills || 0}`
-	totalValue.textContent = `Total Value: ${totalProfit.toLocaleString() || 0}`
+	totalValue.textContent = `Total Value: ${totalProfit.toLocaleString() || 0} gp`
 
 	for (const key in inventoryItems) {
 		const newItem = document.createElement('li');
+		const itemWrapper = document.createElement('div');
 		const img = document.createElement('img');
+		const quantityLabel = document.createElement('span')
 		const head = document.createElement('p');
+		const foot = document.createElement('p');
+		newItem.name = `${key}`
+		img.id = 'inventory-item'
+		foot.id = 'footer-gp-value'
+
+		quantityLabel.textContent = `${inventoryItems[key]['quantity'].toLocaleString() || 0}`
+		quantityLabel.classList.add('quantity-label')
 
 		head.innerHTML = `${key}`
-		newItem.innerHTML = `Amount: ${inventoryItems[key]['quantity'].toLocaleString() || 0} <br> Value: ${inventoryItems[key]['value'].toLocaleString() || 0} gp`;
-		img.src = inventoryItems[key]['image']
+		head.classList.add('mt-3')
+		foot.textContent = `${inventoryItems[key]['value'].toLocaleString() || 0} gp`;
 
-		newItem.prepend(head)
-		newItem.prepend(img);
+		img.src = inventoryItems[key]['image']
+		
+		itemWrapper.appendChild(quantityLabel);
+		itemWrapper.appendChild(img);
+		itemWrapper.appendChild(head)
+		itemWrapper.appendChild(foot)
+		
+		newItem.appendChild(itemWrapper);
 		itemList.appendChild(newItem);
 	}
 
@@ -61,26 +90,16 @@ getDropButton.addEventListener('click', async (e) => {
 	e.preventDefault();
 	let data = await getData();
 	updateUI(data)
-	// let inventoryItems = data.Inventory[1]
-	// let currentDrop = data.Inventory[2]
-	// let totalKills = data.Inventory[3]
-	// console.log(currentDrop['name'])
-	// currentItem = `${currentDrop['name']}`
-
-	// for (const key in inventoryItems) {
-	// 	const newItem = document.createElement('li');
-	// 	newItem.textContent = `${key}: Amount: ${inventoryItems[key]['quantity']} - Value: ${inventoryItems[key]['value']} gp`;
-	// 	droppedItem.textContent = `${currentDrop['name']}`
-	// 	document.getElementById('dropped-item-details').textContent = `Drop Details: Amount: ${currentDrop['quantity']} Value: ${currentDrop['value']} gp`
-	// 	killCounter.textContent = `Total Kills: ${totalKills}`
-	// 	itemList.classList.add('list-group-item')
-	// 	itemList.appendChild(newItem)
-	// };
 });
 
 
 
-removeItem.addEventListener('click', (e) => {
+removeItem.addEventListener('click', async (e) => {
 	e.preventDefault();
-	fetch(`http://127.0.0.1:5000/get-drop/${currentItem}`).catch(console.error)
+	let data = await recentlyDeleted();
+	itemDetails = data.itemDetails
+
+	const itemListItems = Array.from(itemList.children)
+	console.log(itemListItems)
+
 })

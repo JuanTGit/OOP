@@ -21,10 +21,7 @@ def recieve_drop():
         return jsonify({'error', str(e)}), 500
 
 
-@app.route('/get-drop/<item>', methods=['GET', 'DELETE'])
-def drop_item(item):
-    try:
-        juant.drop_item(item)
-        return jsonify({'success': 'Item removed successfully'}), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+@app.route('/get-drop/drop-current', methods=['GET', 'DELETE'])
+def drop_item():
+    remove_previous = juant.drop_item()
+    return jsonify({'itemDetails': remove_previous}), 200
