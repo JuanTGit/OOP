@@ -1,3 +1,5 @@
+from fractions import Fraction
+
 class Player:
 
     def __init__(self, name):
@@ -9,8 +11,6 @@ class Player:
     def add_item(self, items):
         self.raid_counter += 1
         self.last_item = [items['name'], int(items['quantity']), int(items['value'])]
-        
-        # print(self.inventory)
 
         drop = items['name']
         if drop in self.inventory:
@@ -20,6 +20,7 @@ class Player:
             self.inventory[drop] = {
                 'quantity': int(items['quantity']),
                 'value': int(items['value']),
+                'rarity': [items['rarity'][0], items['rarity'][1]],
                 'image': items['image']
             }
 

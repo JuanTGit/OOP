@@ -1,7 +1,7 @@
 
 const getDropButton = document.getElementById('get-drop')
 const itemList = document.getElementById('drop-details')
-const droppedItem = document.getElementById('dropped-item')
+const droppedItemDetails = document.getElementById('dropped-item-details')
 const killCounter = document.getElementById('kill-count')
 const totalValue = document.getElementById('total-value')
 const removeItem = document.getElementById('remove-item')
@@ -15,6 +15,7 @@ async function getData() {
 	try{
 		let req = await fetch("http://127.0.0.1:5000/get-drop")
 		let data = await req.json()
+		console.log(data)
 		return data
 	} catch (error) {
 		console.error('Failed to fetch data:', error);
@@ -40,8 +41,10 @@ function updateUI(data) {
 	const totalKills = data.Inventory[3];
 	const itemImage = currentDrop['image']
 	const totalProfit = data.Inventory[0]
+	const itemRarity = currentDrop['rarity'][1]
 	currentItem = `${currentDrop['name']}`
 
+	console.log(itemRarity)
 	itemList.innerHTML = '';
 	updateItemName.innerHTML = `You received ${currentDrop['quantity'].toLocaleString()} x ${currentDrop['name']}!`
 	updateItemImg.src = `${itemImage}`
@@ -50,10 +53,15 @@ function updateUI(data) {
 	updateItemImg.classList.add('bounce');
 	updateBossImg.src = `${data.Inventory[4]}`
 
-	
-	document.getElementById('dropped-item-details').innerHTML = `Value: ${Number(currentDrop['value']).toLocaleString() || 0} gp`
+	const droppedItemValue = document.createElement('h5')
+	const droppedItemRarity = document.createElement('h5')
+	droppedItemValue.innerText = `Value: ${Number(currentDrop['value']).toLocaleString()}`;
+	droppedItemRarity.innerText = `Drop Rate: ${itemRarity}`
+
+	droppedItemDetails.innerHTML = ''
+	droppedItemDetails.append(droppedItemValue, droppedItemRarity)
 	killCounter.textContent = `Total Kills: ${totalKills || 0}`
-	totalValue.textContent = `Total Value: ${totalProfit.toLocaleString() || 0} gp`
+	totalValue.innerHTML = `Total Value: ${totalProfit.toLocaleString() || 0} gp`
 
 	for (const key in inventoryItems) {
 		const newItem = document.createElement('li');

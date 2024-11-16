@@ -10,12 +10,41 @@
 	}
 }
 body{
-	background-color: rgb(45, 46, 48);
-	color: hsl(0, 0%, 92%);
+	background-color: #1C1C1C;
+	color: #E8E8E8;
 }
+@keyframes fadeIn {
+	to {
+	  opacity: 1;
+	}
+  }
+.card-body{
+	background-color: rgb(84, 85, 88);
+	font-size: 2.5em;
+	margin: auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	padding: 10px;
+	border: 2.2px solid #30baa3a2;
+	vertical-align: middle;
+	text-align: center;
+	border-radius: 5px;
+	box-shadow: 4px 5px 4px 3px #5c070723;
+	overflow: hidden;
+	transition: all 0.4s ease 0s;
+	animation: fadeIn 1s forwards;
+	animation-delay: calc(var(--i) * 0.2s);
+}
+.card-body:hover{
+	transform: scale(1.05);
+	overflow: hidden;
+	border: 2.2px solid #30baa3;
+}
+
 #drop-details {
 	background-color: #3d3528;
 	border: 6px solid #504736;
+	margin-bottom: 20px;
 	padding: 12px;
 	border-radius: 4px;
 	min-height: 400px;
@@ -27,7 +56,7 @@ body{
 #drop-details li {
     background: #3d3528;
     /* border: 1px solid rgba(0, 0, 0, 0.164); */
-	color: hsl(0, 0%, 92%);
+	color: #E8E8E8;
     text-align: center;
     border-radius: 2px;
 }
@@ -42,16 +71,11 @@ body{
 	height: 45px;
 	animation: bounce 2s ease-in-out infinite;
 } */
-
-@keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
-  }
   
 #dropped-item-img.bounce {
 	width: 35px;
 	height: 30px;
-	animation: bounce 2s ease-in-out 0.5s 2;
+	animation: bounce 2s ease-in-out 2;
 }
 
 
@@ -87,5 +111,3 @@ body{
 		display: none;
 	}
   }
-
-  

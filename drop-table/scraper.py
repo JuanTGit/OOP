@@ -59,7 +59,7 @@ for table in boss_tables:
 			item_details[table_name].append({
 				'name': item_name,
 				'quantity': item_quantity,
-				'rarity': convert_drops(item_rarity),
+				'rarity': [convert_drops(item_rarity), item_rarity],
 				'value': item_value,
 				'image': img_src
 			})

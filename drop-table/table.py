@@ -16,7 +16,7 @@ class DropTable:
                 self.boss_image = items
             else:
                 for item in items:
-                    cumulative_drop_rate += item['rarity']
+                    cumulative_drop_rate += item['rarity'][0]
                 self.probability_table[table] = cumulative_drop_rate
 
     
@@ -41,7 +41,7 @@ class DropTable:
             cumulative_rarity = 0
             item_roll = random.random()
             for item in items:
-                cumulative_rarity += item['rarity']
+                cumulative_rarity += item['rarity'][0]
                 if item_roll <= cumulative_rarity:
                     item_copy = item.copy()
                     return item_copy
