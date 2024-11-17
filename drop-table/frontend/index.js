@@ -8,6 +8,7 @@ const removeItem = document.getElementById('remove-item')
 const updateItemName = document.getElementById('item-name')
 const updateItemImg = document.getElementById('dropped-item-img')
 const updateBossImg = document.getElementById('boss-img')
+const determineShadow = document.getElementById('shadow')
 
 let currentItem = null
 
@@ -44,7 +45,6 @@ function updateUI(data) {
 	const itemRarity = currentDrop['rarity'][1]
 	currentItem = `${currentDrop['name']}`
 
-	console.log(itemRarity)
 	itemList.innerHTML = '';
 	updateItemName.innerHTML = `You received ${currentDrop['quantity'].toLocaleString()} x ${currentDrop['name']}!`
 	updateItemImg.src = `${itemImage}`
@@ -52,6 +52,7 @@ function updateUI(data) {
 	updateItemImg.offsetHeight;
 	updateItemImg.classList.add('bounce');
 	updateBossImg.src = `${data.Inventory[4]}`
+	determineShadow.classList.add('shadow')
 
 	const droppedItemValue = document.createElement('h5')
 	const droppedItemRarity = document.createElement('h5')

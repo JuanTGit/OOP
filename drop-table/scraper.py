@@ -46,6 +46,7 @@ for table in boss_tables:
 			item_name = item_name_cell.text.strip()
 			item_quantity = item_quantity_cell['data-sort-value']
 			item_rarity = item_rarity_cell['data-drop-fraction'].replace(',', '')
+			item_rarity_fraction = item_rarity_cell['data-drop-oneover']
 			item_value = item_value_cell['data-sort-value']
 
 			def convert_drops(str):
@@ -59,7 +60,7 @@ for table in boss_tables:
 			item_details[table_name].append({
 				'name': item_name,
 				'quantity': item_quantity,
-				'rarity': [convert_drops(item_rarity), item_rarity],
+				'rarity': [convert_drops(item_rarity), item_rarity_fraction],
 				'value': item_value,
 				'image': img_src
 			})
