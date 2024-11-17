@@ -45,6 +45,12 @@ class Player:
             del self.inventory[item]
         else:
             return 'Item not in inventory'
+        
+    def clear_inventory(self):
+        self.inventory = {}
+        self.last_item = []
+        self.raid_counter = 0
+        return self.inventory
 
 juant = Player('Juan T')
 sherleyl = Player('Sherley L')

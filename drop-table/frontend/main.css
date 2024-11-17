@@ -128,22 +128,21 @@ p {
 	animation: bounce 2s ease-in-out 2;
 }
 
-
-
 #inventory-item {
 	display: flex;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-/* #boss-img {
-	width: 65%;
-} */
+.clear-inventory{
+	display: flex;
+	justify-content: center;
+}
 
-/* #boss-img {
-	box-shadow: 0px 350px 300px 10px rgba(0, 0, 0, 0.2); /* Shadow beneath the image */
-	/* transition: box-shadow 0.3s ease;
-} */
+#clear-inventory{
+	font-weight: bold;
+}
+
 
 #boss-img {
 	display: block;
@@ -159,6 +158,10 @@ p {
 	border-radius: 50%;
 	margin-top: -20px;
 	box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+p{
+	margin: 0%;
 }
 
 @media screen and (max-width: 600px) {

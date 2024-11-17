@@ -25,3 +25,8 @@ def recieve_drop():
 def drop_item():
     remove_previous = juant.drop_item()
     return jsonify({'itemDetails': remove_previous}), 200
+
+@app.route('/clear-inventory', methods=['GET', 'POST'])
+def clear_inv():
+    clear_inv = juant.clear_inventory()
+    return jsonify({'Inventory': clear_inv})

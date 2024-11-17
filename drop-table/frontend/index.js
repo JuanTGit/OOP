@@ -37,15 +37,24 @@ async function recentlyDeleted() {
 }
 
 function updateUI(data) {
-	const inventoryItems = data.Inventory[1];
-	const currentDrop = data.Inventory[2];
-	const totalKills = data.Inventory[3];
-	const itemImage = currentDrop['image']
-	const totalProfit = data.Inventory[0]
-	const itemRarity = currentDrop['rarity'][1]
-	currentItem = `${currentDrop['name']}`
-
 	itemList.innerHTML = '';
+	
+	const inventoryItems = data.Inventory[1];
+	if (Object.keys(data).length === 0){
+		console.log('hello no data here!')
+		return;
+	}
+
+	if (data) {
+		const currentDrop = data.Inventory[2];
+		const totalKills = data.Inventory[3];
+		const itemImage = currentDrop['image']
+		const totalProfit = data.Inventory[0]
+		const itemRarity = currentDrop['rarity'][1]
+		currentItem = `${currentDrop['name']}`
+	}
+
+
 	updateItemName.innerHTML = `You received ${currentDrop['quantity'].toLocaleString()} x ${currentDrop['name']}!`
 	updateItemImg.src = `${itemImage}`
 	updateItemImg.classList.remove('bounce');
@@ -80,7 +89,6 @@ function updateUI(data) {
 		quantityLabel.classList.add('quantity-label')
 
 		head.innerHTML = `${key}`
-		// head.classList.add('mt-3')
 		foot.textContent = `${inventoryItems[key]['value'].toLocaleString() || 0} gp`;
 
 		img.src = inventoryItems[key]['image']
@@ -112,4 +120,19 @@ removeItem.addEventListener('click', async (e) => {
 	const itemListItems = Array.from(itemList.children)
 	console.log(itemListItems)
 
+})
+
+async function clearInventory() {
+	let data = await fetch('http://127.0.0.1:5000/clear-inventory')
+	let res = data.json()
+	return res
+}
+
+const clearInventoryButton = document.getElementById("clear-inventory")
+
+
+clearInventoryButton.addEventListener('click', async (e) => {
+	e.preventDefault();
+	let data = await clearInventory()
+	updateUI(data)
 })
