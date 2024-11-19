@@ -9,6 +9,7 @@ function DropSimulator(){
 	const [alertMessage, setAlertMessage] = useState(null);
 	const [autoDrop, setAutoDrop] = useState(false);
 	const [intervalId, setIntervalId] = useState(null);
+	const [animationClass, setAnimationClass] = useState('');
 
 	const startDropping = () => {
 		if (!autoDrop) {
@@ -99,6 +100,7 @@ function DropSimulator(){
 				itemName: rolledDrop.name,
 				quantity: rolledDrop.quantity,
 			})
+			setAnimationClass('bounce');
 
 			setInventoryItems((prevItems) => {
 				const existingItem = prevItems[rolledDrop.name] || {}; // Check for existing item
@@ -139,6 +141,15 @@ function DropSimulator(){
 	const dismissAlert = () => {
 		setAlertMessage(null);
 	};
+	useEffect(() => {
+		if (animationClass === 'bounce') {
+		  	const timer = setTimeout(() => {
+				setAnimationClass(''); // Remove bounce class after animation completes
+			}, 5000);
+		  
+		  	return () => clearTimeout(timer); // Clean up the timeout on unmount
+		}
+	}, [animationClass]);
 
 
 	return(
@@ -181,7 +192,7 @@ function DropSimulator(){
 							{currentDrop.itemName ? 	
 							<div className="card-body text-center">
 								<h4 id="item-name">You received {Number(currentDrop.quantity).toLocaleString()} x {currentDrop.itemName}</h4>
-								<img src={currentDrop.image} alt="" id="dropped-item-img" className="bounce"/>
+								<img src={currentDrop.image} alt="" id="dropped-item-img" className={animationClass}/>
 								<h5 className="card-text mt-1" id="dropped-item-details">Value: {Number(currentDrop.value).toLocaleString()}</h5>
 								<h5 className="card-text mt-1" id="dropped-item-details">Drop Rate: {currentDrop.rarity}</h5>
 								<a href="#" className="btn btn-danger" id="remove-item" onClick={() => handleRemoveItem(currentDrop.itemName)}>Drop Item</a>

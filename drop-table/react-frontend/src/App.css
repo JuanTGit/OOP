@@ -123,8 +123,6 @@ p {
 
   
 #dropped-item-img.bounce {
-	width: 35px;
-	height: 35px;
 	animation: bounce 2s ease-in-out 2;
 }
 
