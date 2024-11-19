@@ -1,13 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import DropSimulator from './components/DropSimulator'
 
 function App() {
   return (
-    <>
-      <h1>Drop Simulator</h1>
-    </>
+    <div className='container'>
+      <DropSimulator />
+    </div>
   )
 }
 
