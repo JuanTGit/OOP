@@ -1,8 +1,9 @@
 from table import new_table
 from player import Player, juant
 from app import app
-from flask import jsonify
-
+from flask import jsonify, request
+import shared_state
+from scraper import update_item_details, item_details
 
 @app.route("/")
 def index():
@@ -12,6 +13,7 @@ def index():
 def recieve_drop():
     try:
         drop = new_table.get_drop(juant)
+        print(drop)
         return jsonify({'Inventory': drop}), 200
     except Exception as e:
         return jsonify({'error', str(e)}), 500
@@ -26,3 +28,19 @@ def drop_item():
 def clear_inv():
     clear_inv = juant.clear_inventory()
     return jsonify(clear_inv)
+
+@app.route('/get-boss', methods=['POST'])
+def get_boss():
+    data = request.get_json()
+    new_boss_name = data.get('boss')
+    if new_boss_name:
+        shared_state.boss_name = new_boss_name
+        try:
+            # Fetch and update item details for the new boss
+            update_item_details()       
+            new_table.update_table(item_details)
+            drop = new_table.get_drop(juant)
+            return jsonify({"Inventory": drop}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+    return jsonify({"error": "No boss name provided"}), 400

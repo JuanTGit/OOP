@@ -8,10 +8,17 @@ class DropTable:
         self.table = table
         self.probability_table = {}
         self.boss_image = None
+        self.update_table(table)
+    
+    def update_table(self, new_table):
+        # Update table with new data
+        self.table = new_table
+        self.probability_table = {}
+        self.boss_image = None
 
+        # Recalculate the probability table with the new items
         for table, items in self.table.items():
             cumulative_drop_rate = 0
-
             if table == 'boss_image':
                 self.boss_image = items
             else:
@@ -59,5 +66,3 @@ class DropTable:
             
 
 new_table = DropTable(item_details)
-
-new_table.get_drop(juant)

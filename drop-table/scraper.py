@@ -1,66 +1,145 @@
 import requests
 from bs4 import BeautifulSoup
+import shared_state
 
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
-boss_wiki = requests.get("https://oldschool.runescape.wiki/w/General_Graardor", headers=headers)
-soup = BeautifulSoup(boss_wiki.text, "html.parser")
-boss_tables = soup.find_all('table', attrs={'class': 'item-drops'})
-boss_table = soup.find('table', attrs={'class': 'infobox-monster'})
-boss_image = boss_table.find('img')['src']
+# headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
+# boss_wiki = requests.get("https://oldschool.runescape.wiki/w/goblin", headers=headers)
+# soup = BeautifulSoup(boss_wiki.text, "html.parser")
+# boss_tables = soup.find_all('table', attrs={'class': 'item-drops'})
+# boss_table = soup.find('table', attrs={'class': 'infobox-monster'})
+# boss_image = boss_table.find('img')['src']
+
+# item_details = {}
+# item_details['boss_image'] = f'https://oldschool.runescape.wiki{boss_image}'
+
+
+
+# for table in boss_tables:
+# 	table_name = table.find_previous('span', attrs={'class': 'mw-headline'}).text
+
+# 	rows = table.find_all('tr')
+
+# 	for row in rows[1:]:
+# 		# Item Name Row
+# 		item_name_cell = row.find('td', attrs={'class': 'item-col'})
+# 		# Item Quantity Row
+# 		item_quantity_cell = row.find('td', attrs={'data-sort-value': True})
+# 		# Rarity Row
+# 		item_rarity_cell = row.find('span', attrs={'data-drop-fraction': True})
+# 		# Item Value Row
+# 		item_value_cell = row.find('td', attrs={'class': 'ge-column'})
+# 		# Image SRC
+# 		item_img_cell = row.find('td', attrs={'class': 'inventory-image'})
+
+# 		# print(item_name_cell.text)
+# 		image_url = None
+# 		# print(img_src)
+
+# 		if item_img_cell:
+# 			img_tag = item_img_cell.find('img', attrs={'src': True})
+# 			if img_tag:
+# 				image_url = img_tag['src']
+# 		# print(image_url)
+
+# 		img_src = f'https://oldschool.runescape.wiki{image_url}'
+
+# 		if item_name_cell and item_quantity_cell and item_rarity_cell and item_value_cell:
+# 			item_name = item_name_cell.text.strip()
+# 			item_quantity = item_quantity_cell['data-sort-value']
+# 			item_rarity = item_rarity_cell['data-drop-fraction'].replace(',', '')
+# 			item_rarity_fraction = item_rarity_cell['data-drop-oneover']
+# 			item_value = item_value_cell['data-sort-value']
+
+# 			def convert_drops(str):
+# 				if '/' in str:
+# 					numerator, denominator = map(float, str.split('/'))
+# 					return (numerator / denominator)
+
+# 			if table_name not in item_details:
+# 				item_details[table_name] = []
+
+# 			item_details[table_name].append({
+# 				'name': item_name,
+# 				'quantity': item_quantity,
+# 				'rarity': [convert_drops(item_rarity), item_rarity_fraction],
+# 				'value': item_value,
+# 				'image': img_src
+# 			})
+
+
+
+
+
+
+
 
 item_details = {}
-item_details['boss_image'] = f'https://oldschool.runescape.wiki{boss_image}'
 
+def update_item_details():
+	global item_details  # Ensure you're modifying the global dictionary
 
+	# Clear previous item details
+	item_details.clear()
 
-for table in boss_tables:
-	table_name = table.find_previous('span', attrs={'class': 'mw-headline'}).text
+	# Dynamically fetch the boss wiki page based on the updated boss name
+	headers = {
+		'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+	}
+	boss_url = f"https://oldschool.runescape.wiki/w/{shared_state.boss_name}"
+	response = requests.get(boss_url, headers=headers)
 
-	rows = table.find_all('tr')
+	soup = BeautifulSoup(response.text, "html.parser")
+	
+	# Parse the page and populate item_details
+	boss_tables = soup.find_all('table', attrs={'class': 'item-drops'})
+	boss_table = soup.find('table', attrs={'class': 'infobox-monster'})
+	boss_image = boss_table.find('img')['src']
+	
+	item_details['boss_image'] = f'https://oldschool.runescape.wiki{boss_image}'
+	
+	for table in boss_tables:
+		table_name = table.find_previous('span', attrs={'class': 'mw-headline'}).text
+		
+		rows = table.find_all('tr')
+		
+		for row in rows[1:]:
+			item_name_cell = row.find('td', attrs={'class': 'item-col'})
+			item_quantity_cell = row.find('td', attrs={'data-sort-value': True})
+			item_rarity_cell = row.find('span', attrs={'data-drop-fraction': True})
+			item_value_cell = row.find('td', attrs={'class': 'ge-column'})
+			item_img_cell = row.find('td', attrs={'class': 'inventory-image'})
 
-	for row in rows[1:]:
-		# Item Name Row
-		item_name_cell = row.find('td', attrs={'class': 'item-col'})
-		# Item Quantity Row
-		item_quantity_cell = row.find('td', attrs={'data-sort-value': True})
-		# Rarity Row
-		item_rarity_cell = row.find('span', attrs={'data-drop-fraction': True})
-		# Item Value Row
-		item_value_cell = row.find('td', attrs={'class': 'ge-column'})
-		# Image SRC
-		item_img_cell = row.find('td', attrs={'class': 'inventory-image'})
+			image_url = None
+			if item_img_cell:
+				img_tag = item_img_cell.find('img', attrs={'src': True})
+				if img_tag:
+					image_url = img_tag['src']
 
-		# print(item_name_cell.text)
-		image_url = None
-		# print(img_src)
+			img_src = f'https://oldschool.runescape.wiki{image_url}'
 
-		if item_img_cell:
-			img_tag = item_img_cell.find('img', attrs={'src': True})
-			if img_tag:
-				image_url = img_tag['src']
-		# print(image_url)
+			if item_name_cell and item_quantity_cell and item_rarity_cell and item_value_cell:
+				item_name = item_name_cell.text.strip()
+				item_quantity = item_quantity_cell['data-sort-value']
+				item_rarity = item_rarity_cell['data-drop-fraction'].replace(',', '')
+				item_rarity_fraction = item_rarity_cell['data-drop-oneover']
+				item_value = item_value_cell['data-sort-value']
 
-		img_src = f'https://oldschool.runescape.wiki{image_url}'
+				def convert_drops(string):
+					if '/' in string:
+						numerator, denominator = map(float, string.split('/'))
+						return numerator / denominator
 
-		if item_name_cell and item_quantity_cell and item_rarity_cell and item_value_cell:
-			item_name = item_name_cell.text.strip()
-			item_quantity = item_quantity_cell['data-sort-value']
-			item_rarity = item_rarity_cell['data-drop-fraction'].replace(',', '')
-			item_rarity_fraction = item_rarity_cell['data-drop-oneover']
-			item_value = item_value_cell['data-sort-value']
+				if table_name not in item_details:
+					item_details[table_name] = []
 
-			def convert_drops(str):
-				if '/' in str:
-					numerator, denominator = map(float, str.split('/'))
-					return (numerator / denominator)
-
-			if table_name not in item_details:
-				item_details[table_name] = []
-
-			item_details[table_name].append({
-				'name': item_name,
-				'quantity': item_quantity,
-				'rarity': [convert_drops(item_rarity), item_rarity_fraction],
-				'value': item_value,
-				'image': img_src
-			})
+				item_details[table_name].append({
+					"name": item_name,
+					"quantity": item_quantity,
+					"rarity": [convert_drops(item_rarity), item_rarity_fraction],
+					"value": item_value,
+					"image": img_src
+				})
+try:
+    update_item_details()
+except Exception as e:
+    print(str(e))

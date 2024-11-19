@@ -12,6 +12,7 @@ const alertContainer = document.getElementById('alert-container')
 let currentItem = null
 
 function updateUI(data) {
+	console.log(data)
 	itemList.innerHTML = '';
 	const inventoryItems = data.Inventory[1];
 	
@@ -43,7 +44,7 @@ function updateUI(data) {
 		totalValue.innerHTML = `Total Value: ${totalProfit.toLocaleString() || 0} gp`
 	// },1000)
 
-		console.log(inventoryItems)
+		// console.log(inventoryItems)
 
 		
 		for (const key in inventoryItems) {

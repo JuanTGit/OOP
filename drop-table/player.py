@@ -1,4 +1,3 @@
-from fractions import Fraction
 
 class Player:
 

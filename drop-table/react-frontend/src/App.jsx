@@ -1,10 +1,11 @@
 import './App.css'
 import DropSimulator from './components/DropSimulator'
+import SearchContent from './components/Search'
 
 function App() {
   return (
     <div className='container'>
-      <DropSimulator />
+      <SearchContent />
     </div>
   )
 }

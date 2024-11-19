@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import InventoryItem from "./InventoryItem";
 
 
-function DropSimulator(){
+function DropSimulator({ bossData }){
 	const [inventoryItems, setInventoryItems] = useState({});
 	const [statData, setStatData] = useState({'value': 0, 'kills': 0, 'image': ''});
 	const [currentDrop, setCurrentDrop] = useState({});
@@ -10,6 +10,23 @@ function DropSimulator(){
 	const [autoDrop, setAutoDrop] = useState(false);
 	const [intervalId, setIntervalId] = useState(null);
 	const [animationClass, setAnimationClass] = useState('');
+	const [bossName, setBossName] = useState('');
+
+	useEffect(() => {
+		if (bossData) {
+		  	console.log("Boss data received:", bossData);
+			setStatData(prev => ({...prev, 'image': bossData[0].Inventory[4]}))
+
+			function capitalizeWords(str) {
+				return str.split(' ').map(word => {
+				  	return word.charAt(0).toUpperCase() + word.slice(1);
+				}).join(' ');
+			}
+
+			let bossNameCapital = capitalizeWords(bossData[1])
+			setBossName(bossNameCapital)
+		}
+	}, [bossData]);
 
 	const startDropping = () => {
 		if (!autoDrop) {
@@ -172,7 +189,7 @@ function DropSimulator(){
 			</div>
 
 
-			<h1 className="text-center mt-5"> Drop Simulator</h1>
+			<h1 className="text-center">{bossName}</h1>
 			{/* <!-- Row 1 --> */}
 			<div className="row">
 				<div className="text-center">
