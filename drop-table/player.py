@@ -34,13 +34,13 @@ class Player:
     def drop_item(self):
         if self.last_item[0] in self.inventory:
             inv_last_item = self.inventory[self.last_item[0]]
-            if self.last_item[1] <= inv_last_item['quantity']:
+            if self.last_item[1] < inv_last_item['quantity']:
                 inv_last_item['quantity'] -= self.last_item[1]
                 inv_last_item['value'] -= self.last_item[2]
-
-                if inv_last_item['quantity'] <= 0 or inv_last_item['quantity'] < self.last_item[1]:
-                    del self.inventory[self.last_item[0]]
-                return {'Inventory': self.inventory}
+                
+            elif inv_last_item['quantity'] <= self.last_item[1]:
+                del self.inventory[self.last_item[0]]
+            return {'Inventory': self.inventory, 'total': self.calculate_inventory()}
         else:
             return {'Inventory': self.inventory, 'empty': True}
         
