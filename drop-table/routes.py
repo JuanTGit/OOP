@@ -1,11 +1,7 @@
 from table import new_table
 from player import Player, juant
-from flask import Flask, jsonify
-from flask_cors import CORS
-
-
-app = Flask(__name__)
-CORS(app)
+from app import app
+from flask import jsonify
 
 
 @app.route("/")
@@ -24,9 +20,9 @@ def recieve_drop():
 @app.route('/get-drop/drop-current', methods=['GET', 'DELETE'])
 def drop_item():
     remove_previous = juant.drop_item()
-    return jsonify({'itemDetails': remove_previous}), 200
+    return jsonify(remove_previous), 200
 
 @app.route('/clear-inventory', methods=['GET', 'POST'])
 def clear_inv():
     clear_inv = juant.clear_inventory()
-    return jsonify({'Inventory': clear_inv})
+    return jsonify(clear_inv)

@@ -1,10 +1,8 @@
 
-const getDropButton = document.getElementById('get-drop')
 const itemList = document.getElementById('drop-details')
 const droppedItemDetails = document.getElementById('dropped-item-details')
 const killCounter = document.getElementById('kill-count')
 const totalValue = document.getElementById('total-value')
-const removeItem = document.getElementById('remove-item')
 const updateItemName = document.getElementById('item-name')
 const updateItemImg = document.getElementById('dropped-item-img')
 const updateBossImg = document.getElementById('boss-img')
@@ -12,48 +10,16 @@ const determineShadow = document.getElementById('shadow')
 
 let currentItem = null
 
-async function getData() {
-	try{
-		let req = await fetch("http://127.0.0.1:5000/get-drop")
-		let data = await req.json()
-		console.log(data)
-		return data
-	} catch (error) {
-		console.error('Failed to fetch data:', error);
-		return { Inventory: [] };
-	}
-}
-
-async function recentlyDeleted() {
-	try{
-		let req = await fetch("http://127.0.0.1:5000/get-drop/drop-current")
-		let data = await req.json()
-		return data
-	} catch (error) {
-		console.error('Failed to fetch data:', error);
-		return { Inventory: [] };
-	}
-	
-}
-
 function updateUI(data) {
 	itemList.innerHTML = '';
 	
 	const inventoryItems = data.Inventory[1];
-	if (Object.keys(data).length === 0){
-		console.log('hello no data here!')
-		return;
-	}
-
-	if (data) {
-		const currentDrop = data.Inventory[2];
-		const totalKills = data.Inventory[3];
-		const itemImage = currentDrop['image']
-		const totalProfit = data.Inventory[0]
-		const itemRarity = currentDrop['rarity'][1]
-		currentItem = `${currentDrop['name']}`
-	}
-
+	const currentDrop = data.Inventory[2];
+	const totalKills = data.Inventory[3];
+	const itemImage = currentDrop['image']
+	const totalProfit = data.Inventory[0]
+	const itemRarity = currentDrop['rarity'][1]
+	currentItem = currentDrop['name']
 
 	updateItemName.innerHTML = `You received ${currentDrop['quantity'].toLocaleString()} x ${currentDrop['name']}!`
 	updateItemImg.src = `${itemImage}`
@@ -81,6 +47,8 @@ function updateUI(data) {
 		const head = document.createElement('p');
 		const foot = document.createElement('p');
 		newItem.name = `${key}`
+		newItem.setAttribute('name', `${key}`); 
+		foot.setAttribute('name', `${key}`)
 		img.id = 'inventory-item'
 
 		
@@ -102,7 +70,23 @@ function updateUI(data) {
 		itemList.appendChild(newItem);
 	}
 
+
 }
+
+// Update droptable -- ROLL DROP
+
+async function getData() {
+	try{
+		let res = await fetch("http://127.0.0.1:5000/get-drop")
+		let data = await res.json()
+		return data
+	} catch (error) {
+		console.error('Failed to fetch data:', error);
+		return { Inventory: [] };
+	}
+}
+
+const getDropButton = document.getElementById('get-drop')
 
 getDropButton.addEventListener('click', async (e) => {
 	e.preventDefault();
@@ -111,16 +95,56 @@ getDropButton.addEventListener('click', async (e) => {
 });
 
 
+// Drop item - DROP ITEM
+
+async function recentlyDeleted() {
+	try{
+		let res = await fetch("http://127.0.0.1:5000/get-drop/drop-current")
+		let data = await res.json()
+		console.log(data)
+		return data
+	} catch (error) {
+		console.error('Failed to fetch data:', error);
+		return { Inventory: [] };
+	}
+	
+}
+
+const removeItem = document.getElementById('remove-item')
 
 removeItem.addEventListener('click', async (e) => {
 	e.preventDefault();
 	let data = await recentlyDeleted();
-	itemDetails = data.itemDetails
-
-	const itemListItems = Array.from(itemList.children)
-	console.log(itemListItems)
-
+	updateOrRemoveItem(currentItem, data.Inventory)
 })
+
+
+function updateOrRemoveItem(itemKey, inventory) {
+    const itemElement = document.querySelector(`li[name="${itemKey}"]`);
+	console.log(inventory)
+    if (inventory[itemKey]) {
+        // Update item
+        const quantityLabel = itemElement.querySelector('.quantity-label');
+        const foot = itemElement.querySelector('p:last-child'); // Assuming the last <p> contains the total value
+        const newQuantity = inventory[itemKey].quantity;
+        const newValue = inventory[itemKey].value; // Assuming value per unit is stored in inventory
+
+        // Update quantity label
+        quantityLabel.textContent = `${newQuantity.toLocaleString()}`;
+
+        // Update total value
+        foot.textContent = `${newValue.toLocaleString()} gp`;
+		// totalValue.innerHTML = 
+
+    } else if (itemElement) {
+        // Remove item if no longer in inventory
+        itemElement.remove();
+    }
+	totalValue.innerHTML = `Total Value: ${0} gp`
+}
+
+
+// Clear inventory - CLEAR INVENTORY
 
 async function clearInventory() {
 	let data = await fetch('http://127.0.0.1:5000/clear-inventory')
@@ -134,5 +158,11 @@ const clearInventoryButton = document.getElementById("clear-inventory")
 clearInventoryButton.addEventListener('click', async (e) => {
 	e.preventDefault();
 	let data = await clearInventory()
-	updateUI(data)
+	currentItem = null;
+	if (itemList.innerHTML === ''){
+		console.error('Inventory already empty')
+	} else {
+		itemList.innerHTML = '';
+		totalValue.innerHTML = `Total Value: ${0} gp`
+	}
 })

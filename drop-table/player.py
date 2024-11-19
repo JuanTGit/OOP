@@ -32,13 +32,17 @@ class Player:
         return total
     
     def drop_item(self):
-        inv_last_item = self.inventory[self.last_item[0]]
-        if self.last_item[1] <= inv_last_item['quantity']:
-            inv_last_item['quantity'] -= self.last_item[1]
-            inv_last_item['value'] -= self.last_item[2]
-            return {'name': self.last_item[0], 'quantity': inv_last_item['quantity'], 'value': inv_last_item['value']}
+        if self.last_item[0] in self.inventory:
+            inv_last_item = self.inventory[self.last_item[0]]
+            if self.last_item[1] <= inv_last_item['quantity']:
+                inv_last_item['quantity'] -= self.last_item[1]
+                inv_last_item['value'] -= self.last_item[2]
+
+                if inv_last_item['quantity'] <= 0 or inv_last_item['quantity'] < self.last_item[1]:
+                    del self.inventory[self.last_item[0]]
+                return {'Inventory': self.inventory}
         else:
-            return "You don't have that item!"
+            return {'Inventory': self.inventory, 'empty': True}
         
     def drop_items(self, item):
         if item in self.inventory:
@@ -50,7 +54,7 @@ class Player:
         self.inventory = {}
         self.last_item = []
         self.raid_counter = 0
-        return self.inventory
+        return {'Inventory': self.inventory, 'total': self.calculate_inventory()}
 
 juant = Player('Juan T')
 sherleyl = Player('Sherley L')
