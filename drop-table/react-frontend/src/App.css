@@ -18,7 +18,16 @@ body{
 	color: #E8E8E8;
 	
 }
+.list-group {
+    max-height: 150px;
+    overflow-y: auto;
+    max-width: 100%;
+    z-index: 10;
+}
 
+.list-group-item {
+    cursor: pointer;
+}
 h1,h2,h3,h4,h5 {
     font-family: 'RunescapeUF', sans-serif;
     font-weight: bold;

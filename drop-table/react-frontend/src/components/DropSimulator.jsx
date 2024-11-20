@@ -14,17 +14,23 @@ function DropSimulator({ bossData }){
 
 	useEffect(() => {
 		if (bossData) {
-		  	console.log("Boss data received:", bossData);
-			setStatData(prev => ({...prev, 'image': bossData[0].Inventory[4]}))
+			try {
+				// Example of using bossData to fetch or process information
+				console.log("Boss data received:", bossData);
+				setStatData(prev => ({...prev, 'image': bossData[0].Inventory[4]}))
+	
+				function capitalizeWords(str) {
+					return str.split(' ').map(word => {
+							return word.charAt(0).toUpperCase() + word.slice(1);
+					}).join(' ');
+				}
+	
+				let bossNameCapital = capitalizeWords(bossData[1])
+				setBossName(bossNameCapital)
 
-			function capitalizeWords(str) {
-				return str.split(' ').map(word => {
-				  	return word.charAt(0).toUpperCase() + word.slice(1);
-				}).join(' ');
+			} catch (error) {
+				console.error('Oops something went wrong displaying the data', error)
 			}
-
-			let bossNameCapital = capitalizeWords(bossData[1])
-			setBossName(bossNameCapital)
 		}
 	}, [bossData]);
 
@@ -189,7 +195,7 @@ function DropSimulator({ bossData }){
 			</div>
 
 
-			<h1 className="text-center">{bossName}</h1>
+			<h1 className="text-center">{bossData[1]}</h1>
 			{/* <!-- Row 1 --> */}
 			<div className="row">
 				<div className="text-center">
