@@ -32,7 +32,8 @@ def clear_inv():
 @app.route('/get-boss', methods=['POST'])
 def get_boss():
     data = request.get_json()
-    new_boss_name = data.get('boss')
+    new_boss_name = data.get('boss').lower()
+    print(new_boss_name)
     if new_boss_name:
         shared_state.boss_name = new_boss_name
         try:
