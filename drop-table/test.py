@@ -6,12 +6,11 @@ string3 = 'HANGMAN_GAME_5'
 def convertStr(str):
 
 	if any(char.isdigit() for char in str):
-		pass
-	else:
-		new_str = str.lower().replace('_', ' ')
-		res = [str.capitalize() for str in new_str.split()]
+		return None
+	new_str = str.lower().replace('_', ' ')
+	res = [str.capitalize() for str in new_str.split()]
 
-		return ' '.join(res)
+	return ' '.join(res)
 
 
 convertStr(string)

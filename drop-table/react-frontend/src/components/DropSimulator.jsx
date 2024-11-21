@@ -15,8 +15,7 @@ function DropSimulator({ bossData }){
 	useEffect(() => {
 		if (bossData) {
 			try {
-				// Example of using bossData to fetch or process information
-				console.log("Boss data received:", bossData);
+				// console.log("Boss data received:", bossData);
 				setStatData(prev => ({...prev, 'image': bossData[0].Inventory[4]}))
 	
 				function capitalizeWords(str) {

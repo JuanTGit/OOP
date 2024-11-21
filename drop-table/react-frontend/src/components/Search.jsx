@@ -1,11 +1,13 @@
 import { useState } from "react"
 import DropSimulator from "./DropSimulator";
 import npcData from '../assets/NpcID.json'
+import FeaturedGame from "./FeaturedGame";
 
 const SearchContent = () => {
 	const [boss, setBoss] = useState({boss: ''})
 	const [bossData, setBossData] = useState(null);
 	const [suggestions, setSuggestions] = useState([]);
+	const [featured, setFeatured] = useState([{name: 'nex', image: 'https://oldschool.runescape.wiki/images/thumb/Rewards_Chest_%28Fortis_Colosseum%29.png/280px-Rewards_Chest_%28Fortis_Colosseum%29.png?49d19'}])
 
 	const handleChange = (e) => {
 		const input = e.target.value
@@ -21,12 +23,22 @@ const SearchContent = () => {
             setSuggestions([]);
         }
 	}
-	const handleSuggestionClick = (npcName) => {
+	const handleSuggestionClick = async (npcName) => {
 		setBoss({ boss: npcName }); // Update the state
 		setSuggestions([]);         // Clear suggestions
-	
+		
 		// Trigger getBossData directly
-		getBossData(npcName);
+		const data = await getBossData(npcName);
+		console.log(data)
+		setBossData([data, npcName]);
+		// console.log(data)
+		setFeatured((prev) => {
+			const updated = [...prev.filter(boss => boss.name !== npcName), { name: npcName, image: data?.Inventory[4] }];
+			
+			return updated.slice(-6);
+		}
+		)
+
 	};
 	
 	const getBossData = async (npcName) => {
@@ -44,7 +56,7 @@ const SearchContent = () => {
 			}
 			const result = await response.json();
 			console.log(result)
-			setBossData([result, npcName]);
+			return result
 		} catch (error) {
 			console.error('error fetching boss data in search', error)
 			alert('Please enter a valid NPC')
@@ -90,6 +102,11 @@ const SearchContent = () => {
                         ))}
                     </ul>
                 )}
+			</div>
+			<div className="row">
+				{featured.map((game, index) => (
+					<FeaturedGame key={index} cardInfo={game}/>
+				))}
 			</div>
 			{bossData && <DropSimulator bossData={bossData}/>}
 		</div>
