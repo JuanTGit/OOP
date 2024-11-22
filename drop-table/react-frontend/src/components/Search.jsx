@@ -24,6 +24,7 @@ const SearchContent = () => {
         }
 	}
 	const handleSuggestionClick = async (npcName) => {
+		console.log(featured)
 		setBoss({ boss: npcName }); // Update the state
 		setSuggestions([]);         // Clear suggestions
 		
@@ -103,12 +104,15 @@ const SearchContent = () => {
                     </ul>
                 )}
 			</div>
-			<div className="row">
+			{bossData ?
+			(<DropSimulator bossData={bossData}/>)
+			:
+			(<div className="row">
 				{featured.map((game, index) => (
 					<FeaturedGame key={index} cardInfo={game}/>
 				))}
-			</div>
-			{bossData && <DropSimulator bossData={bossData}/>}
+			</div>)
+			}
 		</div>
 	)
 }
