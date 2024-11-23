@@ -1,7 +1,7 @@
 import { useState } from "react"
 import DropSimulator from "./DropSimulator";
 import npcData from '../assets/NpcID.json'
-import FeaturedGame from "./FeaturedGame";
+import FeaturedGame from "../components/FeaturedGame";
 
 const SearchContent = () => {
 	const [boss, setBoss] = useState({boss: ''})
@@ -66,7 +66,7 @@ const SearchContent = () => {
 
 
 	return(
-		<div className="row text-center justify-content-center align-items-center vh-100">
+		<div className="row text-center justify-content-center align-items-center content-area">
 			<div className="col-8">
 			<h1>Drop Simulator!</h1>
 				<form className="input-group" onSubmit={(e) => {

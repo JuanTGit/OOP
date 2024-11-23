@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import InventoryItem from "./InventoryItem";
+import InventoryItem from "../components/InventoryItem";
 
 
 function DropSimulator({ bossData }){

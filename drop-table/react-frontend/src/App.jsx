@@ -1,12 +1,12 @@
 import './App.css'
-import DropSimulator from './components/DropSimulator'
+import DropSimulator from './views/DropSimulator'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from './components/Navbar'
-import SearchContent from './components/Search'
+import SearchContent from './views/Search'
 
 function App() {
     return (
-		<div className='container'>
+		<div className='container main-layout'>
 			<Router>
 				<Navbar />
 				<Routes>

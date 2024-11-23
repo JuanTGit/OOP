@@ -17,7 +17,7 @@ function Navbar() {
 	
 			<ul className="navbar-links">
 				<li>
-					<Link to="/home">
+					<Link to="/">
 						<FaHome className="icon" />
 						{!collapsed && <span>Home</span>}
 					</Link>

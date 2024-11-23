@@ -11,13 +11,16 @@
     font-style: normal;
 }
 
-body{
-	font-family: 'RunescapeUF', sans-serif !important;
-	/* background-color: #1C1C1C; */
+html, body{
+	font-family: 'RunescapeUF', sans-serif;
 	background-color: #383838;
 	color: #E8E8E8;
-	
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow: hidden;
 }
+
 .list-group {
     max-height: 150px;
     overflow-y: auto;
@@ -28,6 +31,7 @@ body{
 .list-group-item {
     cursor: pointer;
 }
+
 h1,h2,h3,h4,h5 {
     font-family: 'RunescapeUF', sans-serif;
     font-weight: bold;
@@ -173,6 +177,11 @@ p{
 
 
 /* Navbar */
+.main-layout {
+	display: flex;
+	height: 100vh;
+	width: 100vw;
+}
 
 .vertical-navbar {
 	display: flex;
@@ -190,7 +199,8 @@ p{
 	color: white;
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.589);
 	z-index: 10;
-	transition: width 0.3s ease
+	transition: width 0.3s ease;
+	box-sizing: content-box;
 }
 
 .vertical-navbar:hover {
@@ -239,7 +249,7 @@ p{
 	font-size: 18px;
 	padding: 10px;
 	transition: color 0.3s ease;
-  }
+}
 
 .navbar-links a:hover {
 	background-color: #ffcc00;
@@ -259,20 +269,28 @@ p{
 	display: none;
 }
 
+.content-area {
+	flex-grow: 1;
+	margin-left: 220px;
+	transition: margin-left 0.3s ease;
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+}
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-.vertical-navbar {
-	width: 150px;
-}
+	.vertical-navbar {
+		width: 150px;
+	}
 
-.navbar-links a {
-	font-size: 16px;
-}
+	.navbar-links a {
+		font-size: 16px;
+	}
 
-.navbar-logo img {
-	width: 100px;
-}
+	.navbar-logo img {
+		width: 100px;
+	}
 }
 
 
