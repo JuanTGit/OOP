@@ -12,7 +12,7 @@ function Navbar() {
 		<nav className={`vertical-navbar ${collapsed ? 'collapsed' : ''}`} onMouseEnter={expandNavbar} onMouseLeave={collapseNavbar}>
 			<div className="navbar-logo">
 				<img src={collapsed ? "/logo.png" : "/logotxt.png"} alt="Logo" />
-			</div>
+			</div> 
 	
 	
 			<ul className="navbar-links">
