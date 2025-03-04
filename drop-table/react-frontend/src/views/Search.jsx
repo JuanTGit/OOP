@@ -5,7 +5,7 @@ import npcData from '../assets/NpcID.json';
 import FeaturedGame from "../components/FeaturedGame";
 
 const SearchContent = () => {
-	const navigate = useNavigate();
+    const navigate = useNavigate();
     const [boss, setBoss] = useState({ boss: '' });
     const [bossData, setBossData] = useState(null);
     const [suggestions, setSuggestions] = useState([]);
@@ -39,7 +39,7 @@ const SearchContent = () => {
             const updated = [...prev.filter(boss => boss.name !== npcName), { name: npcName, image: data?.Inventory[4] }];
             return updated.slice(-6);
         });
-		navigate("/simulator", { state: { bossData: [data, npcName] } });
+        navigate("/simulator", { state: { bossData: [data, npcName] } });
     };
 
     const getBossData = async (npcName) => {
@@ -63,18 +63,22 @@ const SearchContent = () => {
         }
     };
 
+    const handleSubmit = async (e, bossName = null) => {
+        if (e && e.preventDefault) {
+            e.preventDefault(); // Prevent default form submission behavior
+        }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const data = await getBossData(boss.boss);
+        const nameToSearch = bossName || boss.boss; // Use the provided bossName or the state boss name
+        const data = await getBossData(nameToSearch);
+
         if (data) {
-            setBossData([data, boss.boss]);
+            setBossData([data, nameToSearch]);
             setFeatured((prev) => {
-                const updated = [...prev.filter(b => b.name !== boss.boss), { name: boss.boss, image: data?.Inventory[4] }];
+                const updated = [...prev.filter(b => b.name !== nameToSearch), { name: nameToSearch, image: data?.Inventory[4] }];
                 return updated.slice(-6);
             });
-			setSuggestions([]);
-			navigate("/simulator", { state: { bossData: [data, boss.boss] } });
+            setSuggestions([]);
+            navigate("/simulator", { state: { bossData: [data, nameToSearch] } });
         }
     };
 
@@ -116,11 +120,15 @@ const SearchContent = () => {
             </div>
             {bossData ? '' : <h1 className="mt-5">Popular Bosses</h1>}
             {bossData ?
-				null
+                null
                 :
                 (<div className="row">
                     {featured.map((game, index) => (
-                        <FeaturedGame key={index} cardInfo={game} />
+                        <FeaturedGame
+                            key={index}
+                            cardInfo={game}
+                            onClick={() => handleSubmit(null, game.name)} // Pass the boss name directly
+                        />
                     ))}
                 </div>)
             }
