@@ -11,6 +11,7 @@ function App() {
 				<Navbar />
 				<Routes>
 					<Route path='/' element={<SearchContent />} />
+					<Route path="/simulator" element={<DropSimulator />} />
 				</Routes>
 			</Router>
 		</div>

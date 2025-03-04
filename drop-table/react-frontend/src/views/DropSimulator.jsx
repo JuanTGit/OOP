@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import InventoryItem from "../components/InventoryItem";
+import { useLocation } from "react-router-dom";
 
 
-function DropSimulator({ bossData }){
+function DropSimulator(){
+	const location = useLocation();
+	const bossData = location.state?.bossData;
+
+
 	const [inventoryItems, setInventoryItems] = useState({});
 	const [statData, setStatData] = useState({'value': 0, 'kills': 0, 'image': ''});
 	const [currentDrop, setCurrentDrop] = useState({});
@@ -173,9 +178,14 @@ function DropSimulator({ bossData }){
 		}
 	}, [animationClass]);
 
+	if (!bossData) {
+        return <div>No boss data available. Please go back and search for a boss.</div>;
+    }
+
 
 	return(
 		<>
+		<div className="row text-center content-area">
 			<div id="alert-container">
 				{alertMessage && (
 				<div
@@ -257,6 +267,7 @@ function DropSimulator({ bossData }){
 				</div>
 				{/* <!--  --> */}
 			</div>
+		</div>
 		</>
 	)
 }
