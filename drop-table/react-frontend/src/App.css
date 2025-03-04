@@ -78,10 +78,11 @@ p {
 .card-popular{
 	background-color: #6a5d4b;
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	width: 18rem;
-	padding: 20px;
-	margin: 4px;
+	height: 30em;
+	margin-right: 4px;
 	justify-content: space-between;
 	padding: 10px;
 	border-radius: 5px;
@@ -254,7 +255,7 @@ p{
 }
 
 .vertical-navbar:hover + .content-area {
-	margin-left: 220px;
+	margin-left: 100px;
 }
 
 .vertical-navbar.collapsed + .content-area {
@@ -308,8 +309,9 @@ p{
 }
 
 .content-area {
+	display: flex;
+	justify-content: center;
 	flex-grow: 1;
-	margin-left: 220px;
 	transition: margin-left 0.3s ease;
 	position: relative;
 	height: 100%;
@@ -339,9 +341,13 @@ p{
 	.navbar-logo img {
 		width: 100px;
 	}
+	.content-area{
+		width: 60%;
+	}
 	.card-popular {
-		width: 70%;
-		max-height: 40%;
+		height: 20em;
+		margin: 0;
+		margin-top: 4px;
 	}
 	.card-img-popular{
 		max-height: 10rem;

@@ -70,7 +70,7 @@ const SearchContent = () => {
 
 	return(
 		<div className="row text-center content-area">
-			<div className="col-10 col-md-8">
+			<div className="search-conent">
 			<h1 className="search-title">Drop Simulator!</h1>
 				<form className="search-bar input-group" onSubmit={(e) => {
 													e.preventDefault()
