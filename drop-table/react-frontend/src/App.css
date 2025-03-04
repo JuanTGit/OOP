@@ -18,7 +18,6 @@ html, body{
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	overflow: hidden;
 }
 
 .list-group {
@@ -74,6 +73,45 @@ p {
 .card-body:hover{
 	transform: scale(1.05);
 	border: 2.2px solid #30baa3;
+}
+
+.card-popular{
+	background-color: #6a5d4b;
+	display: flex;
+	flex-direction: column;
+	width: 18rem;
+	padding: 20px;
+	margin: 4px;
+	justify-content: space-between;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 4px 5px 4px 3px #00000023;
+}
+
+.card-body-popular{
+	font-weight: bold;
+	background-color: rgb(255, 255, 255);
+	font-size: 2.5em;
+	margin: auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	padding: 10px;
+	vertical-align: middle;
+	text-align: center;
+	border-radius: 5px;
+	box-shadow: 4px 5px 4px 3px #5c070723;
+	overflow: hidden;
+	transition: all 0.2s;
+	animation-delay: calc(var(--i) * 0.2s);
+}
+
+.card-body-popular:hover{
+	transform: scale(1.05);
+	border: 2.2px solid #30baa3;
+}
+
+.card-img-popular{
+	height: 18rem;
 }
 
 #drop-details {
@@ -274,9 +312,19 @@ p{
 	margin-left: 220px;
 	transition: margin-left 0.3s ease;
 	position: relative;
-	overflow: hidden;
 	height: 100%;
 }
+
+
+/* .search-title{
+	display: flex;
+	justify-content: end;
+	align-items: start;
+}
+
+.search-bar{
+
+} */
 
 /* Responsive Styles */
 @media (max-width: 768px) {
@@ -290,6 +338,16 @@ p{
 
 	.navbar-logo img {
 		width: 100px;
+	}
+	.card-popular {
+		width: 70%;
+		max-height: 40%;
+	}
+	.card-img-popular{
+		max-height: 10rem;
+	}
+	.card-body-popular{
+		font-size: 1.5em;
 	}
 }
 

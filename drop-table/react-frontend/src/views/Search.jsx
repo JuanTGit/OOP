@@ -7,7 +7,10 @@ const SearchContent = () => {
 	const [boss, setBoss] = useState({boss: ''})
 	const [bossData, setBossData] = useState(null);
 	const [suggestions, setSuggestions] = useState([]);
-	const [featured, setFeatured] = useState([{name: 'nex', image: 'https://oldschool.runescape.wiki/images/thumb/Rewards_Chest_%28Fortis_Colosseum%29.png/280px-Rewards_Chest_%28Fortis_Colosseum%29.png?49d19'}])
+	const [featured, setFeatured] = useState([{name: 'Nex', image: 'https://oldschool.runescape.wiki/images/thumb/Nex.png/270px-Nex.png?2a1b3'}, 
+	 										  {name: 'Araxxor', image: 'https://oldschool.runescape.wiki/images/thumb/Araxxor.png/280px-Araxxor.png?35d2e'}, 
+											  {name: 'Zulrah', image: 'https://oldschool.runescape.wiki/images/thumb/Zulrah_%28serpentine%29.png/250px-Zulrah_%28serpentine%29.png?29a54'}, 
+											  {name: 'Vardorvis', image: 'https://oldschool.runescape.wiki/images/thumb/Vardorvis.png/200px-Vardorvis.png?48af8'}]);
 
 	const handleChange = (e) => {
 		const input = e.target.value
@@ -66,10 +69,10 @@ const SearchContent = () => {
 
 
 	return(
-		<div className="row text-center justify-content-center align-items-center content-area">
-			<div className="col-8">
-			<h1>Drop Simulator!</h1>
-				<form className="input-group" onSubmit={(e) => {
+		<div className="row text-center content-area">
+			<div className="col-10 col-md-8">
+			<h1 className="search-title">Drop Simulator!</h1>
+				<form className="search-bar input-group" onSubmit={(e) => {
 													e.preventDefault()
 													getBossData(boss.boss)}}>
                     <input
@@ -91,7 +94,7 @@ const SearchContent = () => {
                 </form>
 				{/* Suggestions List */}
                 {suggestions.length > 0 && (
-                    <ul className="list-group position-absolute mt-2">
+                    <ul className="list-group position-absolute mt-2" style={{ maxHeight: '200px', overflowY: 'auto' }}>
                         {suggestions.map((npc, index) => (
                             <li
                                 key={index}
