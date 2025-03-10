@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 
 
 function DropSimulator(){
+	const apiDomain = process.env.REACT_APP_API_DOMAIN
 	const location = useLocation();
 	const bossData = location.state?.bossData;
 
@@ -57,7 +58,7 @@ function DropSimulator(){
 
 	const recentlyDeleted = async () => {
 		try {
-			const res = await fetch("http://127.0.0.1:5000/get-drop/drop-current");
+			const res = await fetch(`${apiDomain}/get-drop/drop-current`);
 			const data = await res.json();
 			return data;
 		} catch (error) {
@@ -114,7 +115,7 @@ function DropSimulator(){
 
 	const getData = async () => {
 		try{
-			let res = await fetch("http://127.0.0.1:5000/get-drop")
+			let res = await fetch(`${apiDomain}/get-drop`)
 			let data = await res.json()
 			console.log(data)
 			const rolledDrop = data.Inventory[2]
@@ -148,7 +149,7 @@ function DropSimulator(){
 	
 	}
 	const clearInventory = async () => {
-		return fetch('http://127.0.0.1:5000/clear-inventory')
+		return fetch(`${apiDomain}/clear-inventory`)
 	};
 	const handleClearInventory = async () => {
 		await clearInventory();
