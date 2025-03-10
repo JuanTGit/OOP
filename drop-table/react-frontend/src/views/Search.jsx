@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DropSimulator from "./DropSimulator";
 import npcData from '../assets/NpcID.json';
 import FeaturedGame from "../components/FeaturedGame";
 
