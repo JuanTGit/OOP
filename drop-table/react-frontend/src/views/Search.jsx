@@ -4,6 +4,7 @@ import npcData from '../assets/NpcID.json';
 import FeaturedGame from "../components/FeaturedGame";
 
 const SearchContent = () => {
+    const apiDomain = process.env.REACT_APP_API_DOMAIN
     const navigate = useNavigate();
     const [boss, setBoss] = useState({ boss: '' });
     const [bossData, setBossData] = useState(null);
