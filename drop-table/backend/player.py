@@ -31,6 +31,7 @@ class Player:
         return total
     
     def drop_item(self):
+        print('hello')
         if self.last_item[0] in self.inventory:
             inv_last_item = self.inventory[self.last_item[0]]
             if self.last_item[1] < inv_last_item['quantity']:

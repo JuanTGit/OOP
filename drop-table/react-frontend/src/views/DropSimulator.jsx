@@ -77,6 +77,7 @@ function DropSimulator(){
 		const data = await recentlyDeleted();
 		updateOrRemoveItem(itemName, data.Inventory, data.total);
 	};
+
 	const updateOrRemoveItem = (itemName, updatedInventory, totalValue) => {
 		setInventoryItems((prevItems) => {
 			const updatedItems = { ...prevItems };
@@ -227,14 +228,14 @@ function DropSimulator(){
 								<img src={currentDrop.image} alt="" id="dropped-item-img" className={animationClass}/>
 								<h5 className="card-text mt-1" id="dropped-item-details">Value: {Number(currentDrop.value).toLocaleString()}</h5>
 								<h5 className="card-text mt-1" id="dropped-item-details">Drop Rate: {currentDrop.rarity}</h5>
-								<a href="#" className="btn btn-danger" id="remove-item" onClick={() => handleRemoveItem(currentDrop.itemName)}>Drop Item</a>
+								<a href="" className="btn btn-danger" id="remove-item" onClick={(e) => {e.preventDefault(); handleRemoveItem(currentDrop.itemName)}}>Drop Item</a>
 							</div>
 						: 
 							<div className="card-body text-center">
 								<h4 id="item-name"></h4>
 								<img src="https://oldschool.runescape.wiki/images/Guide_prices.png" alt="" id="dropped-item-img"/>
 								<h5 className="card-text mt-1" id="dropped-item-details">Drop Details</h5>
-								<a href="#" className="btn btn-danger" id="remove-item">Drop Item</a>
+								<a href="" className="btn btn-danger" id="remove-item">Drop Item</a>
 							</div>
 							}
 						<div className="mt-2">

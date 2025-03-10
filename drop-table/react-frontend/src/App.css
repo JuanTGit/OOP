@@ -230,7 +230,7 @@ p{
 	color: white;
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.589);
 	z-index: 10;
-	transition: width 0.3s ease;
+	transition: width 0.4s ease;
 	box-sizing: content-box;
 }
 
@@ -239,7 +239,7 @@ p{
 }
 
 .vertical-navbar.collapsed {
-	width: 60px;
+	width: 75px;
 }
 
 .vertical-navbar:not(:hover) .navbar-links a span {
@@ -255,9 +255,8 @@ p{
 }
 
 .navbar-logo img {
-	width: 150px;
-	margin-bottom: 30px;
-	transition: opacity 0.3s ease;
+	width: 280px;
+	transition: width 0.4s ease;
 }
 
 .navbar-links {
