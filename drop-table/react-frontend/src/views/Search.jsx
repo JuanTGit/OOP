@@ -44,7 +44,7 @@ const SearchContent = () => {
 
     const getBossData = async (npcName) => {
         try {
-            const response = await fetch(`${apiDomain}/get-boss`, {
+            const response = await fetch(`https://drop-simulator-backend.vercel.app/get-boss`, {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json',
