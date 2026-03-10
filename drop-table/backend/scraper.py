@@ -22,14 +22,17 @@ def update_item_details():
 	# Parse the page and populate item_details
 	boss_tables = soup.find_all('table', attrs={'class': 'item-drops'})
 	boss_table = soup.find('table', attrs={'class': 'infobox-monster'})
+
 	boss_image = boss_table.find('img')['src']
 	
 	item_details['boss_image'] = f'https://oldschool.runescape.wiki{boss_image}'
 	
 	for table in boss_tables:
-		table_name = table.find_previous('span', attrs={'class': 'mw-headline'}).text
+		table_name = table.find_previous('h3').text
+		print(table_name)
 		
 		rows = table.find_all('tr')
+		# print(rows)
 		
 		for row in rows[1:]:
 			item_name_cell = row.find('td', attrs={'class': 'item-col'})

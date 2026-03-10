@@ -4,7 +4,7 @@ import npcData from '../assets/NpcID.json';
 import FeaturedGame from "../components/FeaturedGame";
 
 const SearchContent = () => {
-    const apiDomain = process.env.REACT_APP_API_DOMAIN
+    const apiDomain = import.meta.env.VITE_API_DOMAINl;
     const navigate = useNavigate();
     const [boss, setBoss] = useState({ boss: '' });
     const [bossData, setBossData] = useState(null);
@@ -44,7 +44,7 @@ const SearchContent = () => {
 
     const getBossData = async (npcName) => {
         try {
-            const response = await fetch(`https://drop-simulator-backend.vercel.app/get-boss`, {
+            const response = await fetch(`${VITE_API_DOMAIN}/get-boss`, {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json',
